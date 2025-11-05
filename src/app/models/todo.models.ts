@@ -10,3 +10,6 @@ export interface ToDo {
     userID: string;
 }
 
+
+// used when creating a new ToDo task on the UI.
+export type ToDoData = Omit<ToDo, 'id'>;
