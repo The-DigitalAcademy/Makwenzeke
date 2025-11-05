@@ -8,12 +8,12 @@
         </div>
 
         <div class="tab-buttons">
-            <button class="tab-btn" id="signupTab">Sign Up</button>
-            <button class="tab-btn active" id="signinTab">Sign In</button>
+            <button class="tab-btn" (click)="changeForm('signin')" [ngClass]="{'active': isSigninForm()}" id="signupTab">Sign Up</button>
+            <button class="tab-btn" (click)="changeForm('signup')" [ngClass]="{'active': !isSigninForm() }" id="signinTab">Sign In</button>
         </div>
 
         <div class="form-container">
-            <form class="form" id="signupForm">
+            <form class="form"[ngClass]="{'active': !isSigninForm() }" id="signupForm">
                 <div class="input-group">
                     <input type="text" placeholder="Name" required>
                     <i class="fas fa-user"></i>
@@ -29,7 +29,7 @@
                 <button type="submit" class="submit-btn">Sign Up</button>
             </form>
 
-            <form class="form active" id="signinForm">
+            <form class="form" [ngClass]="{'active': isSigninForm() }" id="signinForm">
                 <div class="input-group">
                     <input type="email" placeholder="Email" required>
                     <i class="fas fa-envelope"></i>
