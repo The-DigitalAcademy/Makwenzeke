@@ -1,7 +1,28 @@
 {
+  "users": [
+    {
+      "id": "a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f",
+      "displayName": "Musa_Gumede",
+      "email": "musa.gumede@clinix.com",
+      "password": "$2b$10$abcdefghijklmnopqrstuv"
+    },
+    {
+      "id": "b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a",
+      "displayName": "Nomthi",
+      "email": "nomthi@accenture.com",
+      "password": "$2b$10$wxyzabcdefghijklmnopqr"
+    },
+    {
+      "id": "c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b",
+      "displayName": "BongaG",
+      "email": "bonga.gougota@gmail.com",
+      "password": "$2b$10$stuvwxyzabcdefghijklmn"
+    }
+  ],
   "tasks": [
     {
       "id": 1,
+      "userId": "a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f",
       "title": "Complete project proposal",
       "description": "Write and review the project proposal document",
       "status": "in-progress",
@@ -12,6 +33,7 @@
     },
     {
       "id": 2,
+      "userId": "a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f",
       "title": "Set up development environment",
       "description": "Install and configure all necessary tools and dependencies",
       "status": "completed",
@@ -22,13 +44,91 @@
     },
     {
       "id": 3,
-      "title": "Design user interface mockups",
-      "description": "Create wireframes and mockups for the application UI",
-      "status": "pending",
+      "userId": "b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a",
+      "title": "Design database schema",
+      "description": "Create ERD and define all tables, relationships, and constraints",
+      "status": "in-progress",
       "priority": "high",
+      "dueDate": "2024-12-10",
+      "createdAt": "2024-11-19T11:00:00Z",
+      "updatedAt": "2024-11-21T16:30:00Z"
+    },
+    {
+      "id": 4,
+      "userId": "b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a",
+      "title": "Review code submissions",
+      "description": "Review pull requests and provide feedback to team members",
+      "status": "todo",
+      "priority": "medium",
       "dueDate": "2024-12-05",
-      "createdAt": "2024-11-22T08:00:00Z",
-      "updatedAt": "2024-11-22T08:00:00Z"
+      "createdAt": "2024-11-21T08:45:00Z",
+      "updatedAt": "2024-11-21T08:45:00Z"
+    },
+    {
+      "id": 5,
+      "userId": "c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b",
+      "title": "Write unit tests",
+      "description": "Create comprehensive unit tests for core functionality",
+      "status": "in-progress",
+      "priority": "high",
+      "dueDate": "2024-12-08",
+      "createdAt": "2024-11-20T13:20:00Z",
+      "updatedAt": "2024-11-22T10:00:00Z"
+    },
+    {
+      "id": 6,
+      "userId": "a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f",
+      "title": "Update documentation",
+      "description": "Update API documentation with latest endpoints and examples",
+      "status": "todo",
+      "priority": "low",
+      "dueDate": "2024-12-20",
+      "createdAt": "2024-11-22T09:00:00Z",
+      "updatedAt": "2024-11-22T09:00:00Z"
+    },
+    {
+      "id": 7,
+      "userId": "c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b",
+      "title": "Fix critical bug in authentication",
+      "description": "Resolve issue with JWT token expiration handling",
+      "status": "in-progress",
+      "priority": "critical",
+      "dueDate": "2024-11-28",
+      "createdAt": "2024-11-22T15:30:00Z",
+      "updatedAt": "2024-11-23T11:45:00Z"
+    },
+    {
+      "id": 8,
+      "userId": "b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a",
+      "title": "Optimize database queries",
+      "description": "Identify and optimize slow-running queries",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2024-12-12",
+      "createdAt": "2024-11-21T14:00:00Z",
+      "updatedAt": "2024-11-21T14:00:00Z"
+    },
+    {
+      "id": 9,
+      "userId": "a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f",
+      "title": "Prepare demo presentation",
+      "description": "Create slides and prepare demo for stakeholder meeting",
+      "status": "completed",
+      "priority": "high",
+      "dueDate": "2024-11-24",
+      "createdAt": "2024-11-15T10:00:00Z",
+      "updatedAt": "2024-11-23T17:00:00Z"
+    },
+    {
+      "id": 10,
+      "userId": "c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b",
+      "title": "Research new frameworks",
+      "description": "Evaluate and compare modern frontend frameworks for next project",
+      "status": "todo",
+      "priority": "low",
+      "dueDate": "2024-12-30",
+      "createdAt": "2024-11-22T16:00:00Z",
+      "updatedAt": "2024-11-22T16:00:00Z"
     }
   ]
 }
