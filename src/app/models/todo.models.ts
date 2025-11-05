@@ -8,3 +8,6 @@ export interface ToDo {
 export interface ToDoCategory {
     name: 'OVERDUE' | 'COMPLETED' | 'PENDING'
 }
+
+// used when creating a new ToDo task on the UI.
+export type ToDoData = Omit<ToDo, 'id'>;
