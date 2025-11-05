@@ -1,10 +1,12 @@
 export interface ToDo {
     id: string,
     description : string,
-    status : ToDoCategory,
+    status :'OVERDUE' | 'COMPLETED' | 'PENDING'
     date: string
+    priority: 'low' | 'medium' | 'high';
+    dueDate: string;
+    createdAt: string;
+    updatedAt: string;
+    userID: string;
 }
 
-export interface ToDoCategory {
-    name: 'OVERDUE' | 'COMPLETED' | 'PENDING'
-}
