@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ToDo } from '../models/todo.models';
+import { ToDo, ToDoData } from '../models/todo.models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,12 @@ export class TaskService {
   }
 
   // GET /tasks/:id - Get task by ID
-  getTaskById(id: number): Observable<ToDo> {
+  getTaskById(id: string): Observable<ToDo> {
     return this.http.get<ToDo>(`${this.apiUrl}/${id}`);
   }
 
   // POST /tasks - Create new task
-  createTask(taskData: Omit<ToDo, 'id' | 'createdAt' | 'updatedAt'>): Observable<ToDo> {
+  createTask(taskData: ToDoData): Observable<ToDo> {
     const newTask = {
       ...taskData,
       createdAt: new Date().toISOString(),
@@ -32,7 +32,7 @@ export class TaskService {
   }
 
   // PUT /tasks/:id - Update entire task
-  updateTask(id: number, task: ToDo): Observable<ToDo> {
+  updateTask(id: string, task: ToDo): Observable<ToDo> {
     const updatedTask = {
       ...task,
       updatedAt: new Date().toISOString()
@@ -41,7 +41,7 @@ export class TaskService {
   }
 
   // PATCH /tasks/:id - Partial update
-  updateTaskStatus(id: number, status: ToDo['status']): Observable<ToDo> {
+  updateTaskStatus(id: string, status: ToDo['status']): Observable<ToDo> {
     const updateData = {
       status,
       updatedAt: new Date().toISOString()
@@ -50,7 +50,7 @@ export class TaskService {
   }
 
   // DELETE /tasks/:id - Delete task
-  deleteTask(id: number): Observable<void> {
+  deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
@@ -62,5 +62,10 @@ export class TaskService {
   // GET tasks by priority
   getTasksByPriority(priority: ToDo['priority']): Observable<ToDo[]> {
     return this.http.get<ToDo[]>(`${this.apiUrl}?priority=${priority}`);
+  }
+
+  // GET tasks by user ID
+  getTasksByUserId(userId: string): Observable<ToDo[]> {
+    return this.http.get<ToDo[]>(`${this.apiUrl}?userId=${userId}`);
   }
 }

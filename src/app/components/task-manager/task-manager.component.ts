@@ -4,7 +4,7 @@ import { ToDo } from '../../models/todo.models';
 
 @Component({
   selector: 'app-task-manager',
-  template: './task-manager.component.html',
+  templateUrl: './task-manager.component.html',
   styleUrls: ['./task-manager.component.css']
 })
 export class TaskManagerComponent implements OnInit {
@@ -15,13 +15,11 @@ export class TaskManagerComponent implements OnInit {
   priorityFilter: string = '';
   userFilter: string = '';
 
-  newTodo: Omit<ToDo, 'id' | 'createdAt' | 'updatedAt'> = {
-    description: '',
-    status: 'PENDING',
-    date: new Date().toISOString().split('T')[0],
-    priority: 'medium',
-    dueDate: new Date().toISOString().split('T')[0],
-    userID: ''
+  // User mapping for display
+  userMap: { [key: string]: string } = {
+    'a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f': 'Musa_Gumede',
+    'b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a': 'Nomthi',
+    'c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b': 'BongaG'
   };
 
   constructor(private taskService: TaskService) {}
@@ -40,31 +38,33 @@ export class TaskManagerComponent implements OnInit {
     });
   }
 
-  onCreateTodo() {
-    if (!this.newTodo.description.trim()) {
-      alert('Please enter a todo description');
-      return;
-    }
+  onTaskCreated(newTask: ToDo) {
+    this.todos.push(newTask);
+    this.applyFilters();
+  }
 
-    if (!this.newTodo.userID.trim()) {
-      alert('Please enter a User ID');
-      return;
-    }
+  onFormClosed() {
+    // Optional: Handle form close if needed
+  }
 
-    this.taskService.createTask(this.newTodo).subscribe({
-      next: (todo) => {
-        this.todos.push(todo);
-        this.applyFilters();
-        this.resetForm();
-      },
-      error: (error) => console.error('Error creating todo:', error)
-    });
+  // Add these filter change methods
+  onStatusFilterChange(status: string) {
+    this.statusFilter = status;
+    this.applyFilters();
+  }
+
+  onPriorityFilterChange(priority: string) {
+    this.priorityFilter = priority;
+    this.applyFilters();
+  }
+
+  onUserFilterChange(user: string) {
+    this.userFilter = user;
+    this.applyFilters();
   }
 
   onStatusChange(todoId: string, newStatus: ToDo['status']) {
-    // Convert string ID to number for the service (adjust service if needed)
-    const id = Number(todoId);
-    this.taskService.updateTaskStatus(id, newStatus).subscribe({
+    this.taskService.updateTaskStatus(todoId, newStatus).subscribe({
       next: (updatedTodo) => {
         const index = this.todos.findIndex(t => t.id === todoId);
         if (index !== -1) {
@@ -77,9 +77,7 @@ export class TaskManagerComponent implements OnInit {
 
   onDeleteTodo(todoId: string) {
     if (confirm('Are you sure you want to delete this todo?')) {
-      // Convert string ID to number for the service (adjust service if needed)
-      const id = Number(todoId);
-      this.taskService.deleteTask(id).subscribe({
+      this.taskService.deleteTask(todoId).subscribe({
         next: () => {
           this.todos = this.todos.filter(t => t.id !== todoId);
           this.applyFilters();
@@ -94,20 +92,13 @@ export class TaskManagerComponent implements OnInit {
       const statusMatch = !this.statusFilter || todo.status === this.statusFilter;
       const priorityMatch = !this.priorityFilter || todo.priority === this.priorityFilter;
       const userMatch = !this.userFilter || 
-        todo.userID.toLowerCase().includes(this.userFilter.toLowerCase());
+        this.getUserName(todo.userID).toLowerCase().includes(this.userFilter.toLowerCase());
       return statusMatch && priorityMatch && userMatch;
     });
   }
 
-  resetForm() {
-    this.newTodo = {
-      description: '',
-      status: 'PENDING',
-      date: new Date().toISOString().split('T')[0],
-      priority: 'medium',
-      dueDate: new Date().toISOString().split('T')[0],
-      userID: ''
-    };
+  getUserName(userId: string): string {
+    return this.userMap[userId] || userId;
   }
 
   formatDate(dateString: string): string {
@@ -116,10 +107,5 @@ export class TaskManagerComponent implements OnInit {
       month: 'short',
       day: 'numeric'
     });
-  }
-
-  // Helper method to get todos by user
-  getTodosByUser(userId: string): ToDo[] {
-    return this.todos.filter(todo => todo.userID === userId);
   }
 }

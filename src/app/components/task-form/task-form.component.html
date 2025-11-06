@@ -1,0 +1,159 @@
+<div class="task-form-container">
+  <!-- Add Task Button -->
+  <div class="add-task-button" *ngIf="!showForm">
+    <button class="btn btn-primary btn-lg" (click)="toggleForm()">
+      <i class="icon-plus"></i>
+      Add New Task
+    </button>
+  </div>
+
+  <!-- Task Form -->
+  <div class="task-form-card" *ngIf="showForm">
+    <div class="form-header">
+      <h3>Create New Task</h3>
+      <button class="btn-close" (click)="onCancel()" type="button">
+        &times;
+      </button>
+    </div>
+
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+      
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title" class="form-label">
+          Task Title *
+        </label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-control"
+          [class.invalid]="isFieldInvalid('title')"
+          placeholder="Enter task title"
+        >
+        <div class="error-message" *ngIf="isFieldInvalid('title')">
+          {{ getFieldError('title') }}
+        </div>
+        <div class="character-count">
+          {{ taskForm.get('title')?.value?.length || 0 }}/100
+        </div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description" class="form-label">
+          Task Description *
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-control"
+          [class.invalid]="isFieldInvalid('description')"
+          placeholder="Describe the task in detail..."
+          rows="4"
+        ></textarea>
+        <div class="error-message" *ngIf="isFieldInvalid('description')">
+          {{ getFieldError('description') }}
+        </div>
+        <div class="character-count">
+          {{ taskForm.get('description')?.value?.length || 0 }}/500
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Status Field -->
+        <div class="form-group">
+          <label for="status" class="form-label">Status *</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="form-control"
+            [class.invalid]="isFieldInvalid('status')"
+          >
+            <option *ngFor="let option of statusOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('status')">
+            {{ getFieldError('status') }}
+          </div>
+        </div>
+
+        <!-- Priority Field -->
+        <div class="form-group">
+          <label for="priority" class="form-label">Priority *</label>
+          <select
+            id="priority"
+            formControlName="priority"
+            class="form-control"
+            [class.invalid]="isFieldInvalid('priority')"
+          >
+            <option *ngFor="let option of priorityOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('priority')">
+            {{ getFieldError('priority') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Due Date Field -->
+        <div class="form-group">
+          <label for="dueDate" class="form-label">Due Date *</label>
+          <input
+            type="date"
+            id="dueDate"
+            formControlName="dueDate"
+            class="form-control"
+            [class.invalid]="isFieldInvalid('dueDate')"
+            [min]="getMinDate()"
+          >
+          <div class="error-message" *ngIf="isFieldInvalid('dueDate')">
+            {{ getFieldError('dueDate') }}
+          </div>
+        </div>
+
+        <!-- User Field -->
+        <div class="form-group">
+          <label for="userId" class="form-label">Assign To *</label>
+          <select
+            id="userId"
+            formControlName="userId"
+            class="form-control"
+            [class.invalid]="isFieldInvalid('userId')"
+          >
+            <option value="">Select User</option>
+            <option *ngFor="let user of userOptions" [value]="user.id">
+              {{ user.name }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="isFieldInvalid('userId')">
+            {{ getFieldError('userId') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="isSubmitting"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isSubmitting || taskForm.invalid"
+        >
+          <span *ngIf="isSubmitting" class="spinner"></span>
+          {{ isSubmitting ? 'Creating...' : 'Create Task' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
