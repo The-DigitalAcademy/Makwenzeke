@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
-import { ToDo, ToDoData } from '../../models/todo.models';
+import { ToDo, ToDoData } from 'src/app/models/models';
 
 @Component({
   selector: 'app-task-form',
