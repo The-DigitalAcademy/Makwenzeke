@@ -1,1 +1,97 @@
-<p>dashboard works!</p>
+<div class="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo-icon">✓</div>
+            <div class="logo-text">
+                <h1>Makwenzeke</h1>
+            </div>
+        </div>
+
+        <nav class="nav-menu">
+            <div class="nav-item" 
+                 [class.active]="activeFilter === 'all'"
+                 (click)="setFilter('all')">
+                <span>📋</span> All Tasks
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'important'"
+                 (click)="setFilter('important')">
+                <span>⭐</span> Important
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'today'"
+                 (click)="setFilter('today')">
+                <span>📅</span> Today
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'upcoming'"
+                 (click)="setFilter('upcoming')">
+                <span>🗓️</span> Upcoming
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'completed'"
+                 (click)="setFilter('completed')">
+                <span>✅</span> Completed
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="welcome">
+                <h2>Welcome back, {{ userName }}!</h2>
+                <p>You have {{ tasksToday }} task{{ tasksToday !== 1 ? 's' : '' }} to complete today</p>
+            </div>
+            <div class="top-actions">
+                <button class="btn btn-primary" (click)="navigateToTasks()">
+                    <span>+</span> Manage Tasks
+                </button>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">{{ totalTasks }}</div>
+                            <div class="stat-label">Total Tasks</div>
+                        </div>
+                        <div class="stat-icon">📝</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">{{ completedTasks }}</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">{{ pendingTasks }}</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                        <div class="stat-icon">⏳</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task List Section -->
+            <div class="section-header">
+                <h3>My Tasks</h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" (click)="navigateToTasks()">+</button>
