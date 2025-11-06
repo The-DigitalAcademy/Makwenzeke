@@ -1,5 +1,6 @@
 export interface ToDo {
     id: string,
+    title: string,
     description : string,
     status :'OVERDUE' | 'COMPLETED' | 'PENDING'
     date: string
@@ -12,4 +13,4 @@ export interface ToDo {
 
 
 // used when creating a new ToDo task on the UI.
-export type ToDoData = Omit<ToDo, 'id'>;
+export type ToDoData = Omit<ToDo, 'id'| 'createdAt'| 'updatedAt'>;
