@@ -1,0 +1,97 @@
+<div class="task-manager">
+  <h2>Task Manager</h2>
+  
+  <!-- Task Form Component -->
+  <app-task-form 
+    (taskCreated)="onTaskCreated($event)"
+    (formClosed)="onFormClosed()">
+  </app-task-form>
+
+  <!-- Tasks List -->
+  <div class="tasks-section">
+    <div class="section-header">
+      <h3>All Tasks ({{todos.length}})</h3>
+      
+      <!-- Filters -->
+      <div class="filters">
+        <select [ngModel]="statusFilter" (ngModelChange)="onStatusFilterChange($event)" class="select-field">
+          <option value="">All Statuses</option>
+          <option value="PENDING">Pending</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="COMPLETED">Completed</option>
+          <option value="OVERDUE">Overdue</option>
+        </select>
+        
+        <select [ngModel]="priorityFilter" (ngModelChange)="onPriorityFilterChange($event)" class="select-field">
+          <option value="">All Priorities</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="critical">Critical</option>
+        </select>
+
+        <input 
+          [ngModel]="userFilter" 
+          (ngModelChange)="onUserFilterChange($event)"
+          placeholder="Filter by User"
+          class="input-field"
+        >
+      </div>
+    </div>
+
+    <!-- Tasks Grid -->
+    <div class="tasks-grid">
+      <div 
+        *ngFor="let todo of filteredTodos" 
+        class="task-card"
+        [class]="'priority-' + todo.priority"
+      >
+        <div class="task-header">
+          <h4 class="task-title">{{ todo.title }}</h4>
+          <div class="task-meta">
+            <span class="status-badge" [class]="'status-' + todo.status.toLowerCase()">
+              {{ todo.status }}
+            </span>
+            <span class="priority-badge" [class]="'priority-' + todo.priority">
+              {{ todo.priority }}
+            </span>
+          </div>
+        </div>
+        
+        <p class="task-description">{{ todo.description }}</p>
+        
+        <div class="task-info">
+          <div class="user-info">
+            <strong>Assigned to:</strong> {{ getUserName(todo.userID) }}
+          </div>
+          <div class="date-info">
+            <strong>Due:</strong> {{ formatDate(todo.dueDate) }}
+          </div>
+          <div class="date-info">
+            <strong>Created:</strong> {{ formatDate(todo.createdAt) }}
+          </div>
+        </div>
+
+        <div class="task-actions">
+          <select 
+            [ngModel]="todo.status" 
+            (ngModelChange)="onStatusChange(todo.id, $event)"
+            class="status-select"
+          >
+            <option value="PENDING">Pending</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="OVERDUE">Overdue</option>
+          </select>
+          
+          <button 
+            (click)="onDeleteTodo(todo.id)" 
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
