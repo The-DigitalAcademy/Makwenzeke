@@ -8,43 +8,43 @@
         </div>
 
         <div class="tab-buttons">
-            <button class="tab-btn" id="signupTab">Sign Up</button>
-            <button class="tab-btn active" id="signinTab">Sign In</button>
+            <button class="tab-btn" (click)="changeForm('signin')" [ngClass]="{'active': isSigninForm() }" >Sign In</button>
+            <button class="tab-btn" (click)="changeForm('signup')" [ngClass]="{'active': !isSigninForm()}" >Sign Up</button>
         </div>
 
         <div class="form-container">
-            <form class="form" id="signupForm">
+            <form [formGroup]="signupForm" class="form"[ngClass]="{'active': !isSigninForm() }" id="signupForm" (ngSubmit)="signup()">
                 <div class="input-group">
-                    <input type="text" placeholder="Name" required>
+                    <input type="text" formControlName="displayName" placeholder="Name" required>
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-group">
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" formControlName="email" placeholder="Email" required>
                     <i class="fas fa-envelope"></i>
                 </div>
                 <div class="input-group">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" formControlName="password" placeholder="Password" required>
                     <i class="fas fa-key"></i>
                 </div>
                 <button type="submit" class="submit-btn">Sign Up</button>
             </form>
 
-            <form class="form active" id="signinForm">
+            <form [formGroup]="signinForm" class="form" [ngClass]="{'active': isSigninForm() }" id="signinForm" (ngSubmit)="signin()">
                 <div class="input-group">
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" formControlName="email" placeholder="Email" required>
                     <i class="fas fa-envelope"></i>
                 </div>
                 <div class="input-group">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" formControlName="password" placeholder="Password" required>
                     <i class="fas fa-key"></i>
                 </div>
                 <button type="submit" class="submit-btn">Sign In</button>
             </form>
         </div>
 
-        <div class="divider">You can also sign up with</div>
+        <div class="divider" style="display: none;">You can also sign up with</div>
         
-        <div class="social-login">
+        <div class="social-login" style="display: none;">
             <button class="social-btn" aria-label="Sign in with Twitter">
                 <i class="fab fa-twitter"></i>
             </button>
