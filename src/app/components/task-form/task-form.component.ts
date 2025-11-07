@@ -78,8 +78,8 @@ export class TaskFormComponent implements OnInit {
         priority: formData.priority,
         dueDate: formData.dueDate,
         userID: formData.userId,
-        date: formData.date || new Date().toISOString().split('T')[0] 
-
+        date: formData.date || new Date().toISOString().split('T')[0],
+        completed: undefined
       };
 
       this.taskService.createTask(taskData).subscribe({
