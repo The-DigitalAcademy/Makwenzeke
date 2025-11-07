@@ -1,24 +1,53 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { TaskState } from '../../models/models';
+import { TaskState, taskAdapter } from '../state/task.state';
+import { selectCurrentUserId } from './auth.selectors';
 
+// Get the task feature state
 export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 
-export const selectAllTasks = createSelector(
+// Get the selectors from the entity adapter
+const { selectAll } = taskAdapter.getSelectors();
+
+// Select all tasks (for current user only in practice)
+export const selectAllTasks = createSelector(selectTaskState, selectAll);
+
+// Select ONLY current user's tasks
+export const selectCurrentUserTasks = createSelector(
+  selectAllTasks,
+  selectCurrentUserId,
+  (tasks, currentUserId) => {
+    if (!currentUserId) return [];
+    return tasks.filter(task => task.userID === currentUserId);
+  }
+);
+// Select task filters
+export const selectTaskFilters = createSelector(
   selectTaskState,
-  (state: TaskState) => state.tasks
+  (state) => state.filters
 );
 
+// Select filtered tasks for CURRENT USER only
+export const selectFilteredCurrentUserTasks = createSelector(
+  selectCurrentUserTasks,
+  selectTaskFilters,
+  (userTasks, filters) => {
+    return userTasks.filter(task => {
+      const statusMatch = !filters.status || task.status === filters.status;
+      const priorityMatch = !filters.priority || task.priority === filters.priority;
+      return statusMatch && priorityMatch;
+    });
+  }
+);
+
+
+// Select loading state
 export const selectTasksLoading = createSelector(
   selectTaskState,
-  (state: TaskState) => state.loading
+  (state) => state.loading
 );
 
+// Select error
 export const selectTasksError = createSelector(
   selectTaskState,
-  (state: TaskState) => state.error
-);
-
-export const selectTasksSuccessMessage = createSelector(
-  selectTaskState,
-  (state: TaskState) => state.successMessage
+  (state) => state.error
 );

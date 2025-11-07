@@ -6,7 +6,8 @@ export interface AppUser {
 }
 
 export interface ToDo {
-  id?: string;
+  completed: unknown;
+  id: string;
   userID: string;
   title: string;
   description: string;
@@ -16,20 +17,7 @@ export interface ToDo {
   dueDate: string;
   createdAt: string;
   updatedAt: string;
-
 }
 // used when creating a new ToDo task on the UI.
 export type ToDoData = Omit<ToDo, 'id'| 'createdAt'| 'updatedAt'>;
 
-export interface AuthState {
-  user: AppUser | null;
-  isAuthenticated: boolean;
-  error: string | null;
-}
-
-// export interface ToDoState {
-//   tasks: ToDo[];
-//   loading: boolean;
-//   error: string | null;
-//   successMessage: string | null;
-// }
