@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ).subscribe(user => {
       if (user) {
         this.userName = user.name;
-        this.store.dispatch(TaskActions.loadTasks({ userId: user.id }));
+        this.store.dispatch(TaskActions.loadCurrentUserTasks());  
       }
     });
 
@@ -117,15 +117,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   toggleTaskCompletion(task: ToDo): void {
-    const updatedTask = { ...task, completed: !task.completed };
-    this.store.dispatch(TaskActions.updateTask({ task: updatedTask }));
-  }
+  const updatedTask = { ...task, completed: !task.completed };
+  this.store.dispatch(TaskActions.updateCurrentUserTaskStatus({ 
+    id: task.id!, 
+    status: updatedTask.completed ? 'COMPLETED' : 'PENDING' 
+  }));
+}
 
   deleteTask(taskId: number | undefined): void {
-    if (taskId && confirm('Are you sure you want to delete this task?')) {
-      this.store.dispatch(TaskActions.deleteTask({ taskId }));
-    }
+  if (taskId && confirm('Are you sure you want to delete this task?')) {
+    this.store.dispatch(TaskActions.deleteCurrentUserTask({ id: taskId.toString() }));
   }
+}
 
   navigateToTasks(): void {
     this.router.navigate(['/tasks']);
