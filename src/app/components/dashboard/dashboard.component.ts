@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { Task } from '../../models/models';
+import { ToDo } from 'src/app/models/models';
 import * as TaskActions from '../../store/actions/task.actions';
 import { selectAllTasks, selectTasksLoading } from '../../store/selectors/task.selectors';
 import { selectCurrentUser } from '../../store/selectors/auth.selectors';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  tasks$: Observable<Task[]>;
+  tasks$: Observable<ToDo[]>;
   loading$: Observable<boolean>;
   userName = '';
   
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   tasksToday = 0;
   
   // Filtered tasks
-  displayedTasks: Task[] = [];
+  displayedTasks: ToDo[] = [];
   activeFilter: 'all' | 'important' | 'today' | 'upcoming' | 'completed' = 'all';
   
   private destroy$ = new Subject<void>();
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  filterTasks(tasks: Task[]): void {
+  filterTasks(tasks:ToDo[]): void {
     switch (this.activeFilter) {
       case 'all':
         this.displayedTasks = tasks;
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }).unsubscribe();
   }
 
-  getTasksToday(tasks: Task[]): Task[] {
+  getTasksToday(tasks: ToDo[]): ToDo[] {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  getUpcomingTasks(tasks: Task[]): Task[] {
+  getUpcomingTasks(tasks: ToDo[]): ToDo[] {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
@@ -116,7 +116,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  toggleTaskCompletion(task: Task): void {
+  toggleTaskCompletion(task: ToDo): void {
     const updatedTask = { ...task, completed: !task.completed };
     this.store.dispatch(TaskActions.updateTask({ task: updatedTask }));
   }
@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/tasks']);
   }
 
-  getPriorityClass(task: Task): string {
+  getPriorityClass(task: ToDo): string {
     // Simple priority logic based on completion and recency
     if (task.completed) return 'priority-low';
     
@@ -144,7 +144,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return 'priority-low';
   }
 
-  getPriorityLabel(task: Task): string {
+  getPriorityLabel(task: ToDo): string {
     const priorityClass = this.getPriorityClass(task);
     if (priorityClass === 'priority-high') return 'High';
     if (priorityClass === 'priority-medium') return 'Medium';
