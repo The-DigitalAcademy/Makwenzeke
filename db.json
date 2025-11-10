@@ -41,6 +41,12 @@
       "name": "lebza",
       "email": "lebza@gmail.com",
       "password": "lebza@gmail.com"
+    },
+    {
+      "id": "1389850e-95b5-4f99-bc65-6c05e4ec6cbe",
+      "name": "anna",
+      "email": "abc123@gmail.com",
+      "password": "123.abc"
     }
   ],
   "tasks": [
