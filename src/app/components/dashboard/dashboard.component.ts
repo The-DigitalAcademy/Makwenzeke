@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ToDo } from 'src/app/models/models';
 import * as TaskActions from '../../store/actions/task.actions';
-import { selectAllTasks, selectTasksLoading } from '../../store/selectors/task.selectors';
+import { selectAllTasks, selectFilteredCurrentUserTasks, selectTasksLoading } from '../../store/selectors/task.selectors';
 import { selectCurrentUser } from '../../store/selectors/auth.selectors';
 import { Router } from '@angular/router';
 
@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private store: Store,
     private router: Router
   ) {
-    this.tasks$ = this.store.select(selectAllTasks);
+    this.tasks$ = this.store.select(selectFilteredCurrentUserTasks);
     this.loading$ = this.store.select(selectTasksLoading);
   }
 
