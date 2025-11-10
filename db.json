@@ -35,6 +35,12 @@
       "name": "NeneHue",
       "email": "Nene123@gmail.com",
       "password": "NeneHue123"
+    },
+    {
+      "id": "569da97f-b01d-458c-b57b-1f22bec9a15c",
+      "name": "Nomsa",
+      "email": "nono1@gmail.com",
+      "password": "123.abc"
     }
   ],
   "tasks": [

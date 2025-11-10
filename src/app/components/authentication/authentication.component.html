@@ -1,12 +1,8 @@
 <div class="auth">
     <div class="container">
         <div class="logo-section">
-            <div class="logo-placeholder">
-                <i class="fas fa-map-marker-alt"></i>
+            <img src="../../../assets/Images/LOGO.jpeg" alt="My Company Logo" class="logo-img">
             </div>
-            <div class="header-text"></div>
-        </div>
-
         <div class="tab-buttons">
             <button class="tab-btn" (click)="changeForm('signin')" [ngClass]="{'active': isSigninForm() }" >Sign In</button>
             <button class="tab-btn" (click)="changeForm('signup')" [ngClass]="{'active': !isSigninForm()}" >Sign Up</button>
