@@ -1,13 +1,13 @@
-<nav class="navbar" *ngIf="isAuthenticated$">
+<nav class="navbar">
   <div class="navbar-content">
     <div class="navbar-brand">
       <h1>📝 ToDo App</h1>
     </div>
-    <div class="navbar-links">
+    <div class="navbar-links" *ngIf="isAuthenticated$ | async">
       <a routerLink="/dashboard" routerLinkActive="active-link" class="nav-link">Dashboard</a>
       <a routerLink="/tasks" routerLinkActive="active-link" class="nav-link">Tasks</a>
     </div>
-    <div class="navbar-user" *ngIf="currentUser$ ">
+    <div class="navbar-user" *ngIf="isAuthenticated$ | async">
       <button class="btn-logout" (click)="logout()">Logout</button>
     </div>
   </div>
