@@ -47,6 +47,12 @@
       "name": "anna",
       "email": "abc123@gmail.com",
       "password": "123.abc"
+    },
+    {
+      "id": "340af1c0-4782-4839-8ffe-924d96332bec",
+      "name": "nana",
+      "email": "bvc123@gmail.con",
+      "password": "bvc123"
     }
   ],
   "tasks": [
