@@ -1,7 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
+import  * as authActions  from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-authentication',
@@ -13,7 +15,7 @@ export class AuthenticationComponent {
   signinForm!: FormGroup;
   signupForm!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder){
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder, private store: Store){
     this.initialiseForms();
   }
 
@@ -38,9 +40,13 @@ export class AuthenticationComponent {
     const { email, password } = this.signinForm.value;
     this.authService.login(email, password).subscribe({
       next: (resp) => {
+        this.store.dispatch(
+          authActions.loginSuccess({ user : resp })
+        );
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
+        this.store.dispatch(authActions.loginFailure({ error: err }));
         alert('Error signin into your account.');
       }
     })
@@ -52,6 +58,7 @@ export class AuthenticationComponent {
     const { displayName, email, password } = this.signupForm.value;
     this.authService.register(displayName, email, password).subscribe({
       next: (resp) => {
+        this.store.dispatch( authActions.loginSuccess({ user : resp }) );
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

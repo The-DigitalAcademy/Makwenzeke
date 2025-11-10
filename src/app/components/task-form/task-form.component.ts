@@ -24,7 +24,6 @@ export class TaskFormComponent implements OnInit {
 
   /** Dropdown options for Status, Priority, and Users **/
   statusOptions = [
-    { value: 'todo', label: 'To Do' },
     { value: 'in-progress', label: 'In Progress' },
     { value: 'completed', label: 'Completed' }
   ];
@@ -33,7 +32,6 @@ export class TaskFormComponent implements OnInit {
     { value: 'low', label: 'Low' },
     { value: 'medium', label: 'Medium' },
     { value: 'high', label: 'High' },
-    { value: 'critical', label: 'Critical' }
   ];
 
   // In a real app, you'd probably fetch these from a backend or database.
