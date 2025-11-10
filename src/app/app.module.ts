@@ -28,6 +28,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
     StoreModule.forRoot({tasks:
       taskReducer
     }),
+    StoreDevtoolsModule.instrument({maxAge: 25})
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,7 +9,7 @@ export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 const { selectAll } = taskAdapter.getSelectors();
 
 // Select all tasks (for current user only in practice)
-export const selectAllTasks = createSelector(selectTaskState, selectAll);
+export const selectAllTasks = createSelector(selectTaskState, (state: TaskState) => state.tasks);
 
 // Select ONLY current user's tasks
 export const selectCurrentUserTasks = createSelector(

@@ -2,6 +2,14 @@ import { createReducer, on } from '@ngrx/store';
 import { taskAdapter, initialTaskState } from '../state/task.state';
 import * as TaskActions from '../actions/task.actions';
 import * as AuthActions from '../actions/auth.actions';
+import { ToDo } from 'src/app/models/models';
+
+export interface TaskState { 
+  tasks: ToDo[];
+}
+export const initialTaskState: TaskState = {
+  tasks: []
+};
 
 export const taskReducer = createReducer(
   initialTaskState,
