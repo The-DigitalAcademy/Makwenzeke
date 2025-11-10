@@ -35,6 +35,24 @@
       "name": "NeneHue",
       "email": "Nene123@gmail.com",
       "password": "NeneHue123"
+    },
+    {
+      "id": "49ae6692-c2ef-4ff5-8857-81c3105baae9",
+      "name": "lebza",
+      "email": "lebza@gmail.com",
+      "password": "lebza@gmail.com"
+    },
+    {
+      "id": "1389850e-95b5-4f99-bc65-6c05e4ec6cbe",
+      "name": "anna",
+      "email": "abc123@gmail.com",
+      "password": "123.abc"
+    },
+    {
+      "id": "340af1c0-4782-4839-8ffe-924d96332bec",
+      "name": "nana",
+      "email": "bvc123@gmail.con",
+      "password": "bvc123"
     }
   ],
   "tasks": [
@@ -147,6 +165,18 @@
       "dueDate": "2024-12-30",
       "createdAt": "2024-11-22T16:00:00Z",
       "updatedAt": "2024-11-22T16:00:00Z"
+    },
+    {
+      "id": "f61c",
+      "title": "Record A Song",
+      "description": "Work on a mixtape and finish it get a feature to my boy Grei",
+      "status": "in-progress",
+      "priority": "high",
+      "dueDate": "2025-11-11",
+      "userID": "c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b",
+      "date": "2025-11-10",
+      "createdAt": "2025-11-10T10:08:46.004Z",
+      "updatedAt": "2025-11-10T10:08:46.004Z"
     }
   ]
 }

@@ -1,12 +1,6 @@
 <div class="app-container">
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="logo-section">
-            <div class="logo-icon">✓</div>
-            <div class="logo-text">
-                <h1>Makwenzeke</h1>
-            </div>
-        </div>
 
         <nav class="nav-menu">
             <div class="nav-item" 
@@ -18,11 +12,6 @@
                  [class.active]="activeFilter === 'important'"
                  (click)="setFilter('important')">
                 <span>⭐</span> Important
-            </div>
-            <div class="nav-item"
-                 [class.active]="activeFilter === 'today'"
-                 (click)="setFilter('today')">
-                <span>📅</span> Today
             </div>
             <div class="nav-item"
                  [class.active]="activeFilter === 'upcoming'"
@@ -45,7 +34,7 @@
                 <p>You have {{ tasksToday }} task{{ tasksToday !== 1 ? 's' : '' }} to complete today</p>
             </div>
             <div class="top-actions">
-                <button class="btn btn-primary" (click)="navigateToTasks()">
+                <button class="btn btn-primary" (click)="navigateToTasks()" >
                     <span>+</span> Manage Tasks
                 </button>
             </div>

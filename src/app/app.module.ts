@@ -14,10 +14,13 @@ import { taskReducer } from './store/reducers/task.reducers';
 import { TaskEffects } from './store/effects/task.effects';
 import { TaskListComponent } from './components/task-list/task-list.component';
 
+import { NavbarComponent } from './navbar/navbar.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     TaskListComponent,
   ],
   imports: [
