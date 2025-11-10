@@ -6,7 +6,7 @@ export interface AppUser {
 }
 
 export interface ToDo {
-  completed: unknown;
+  completed: boolean;
   id: string;
   userID: string;
   title: string;

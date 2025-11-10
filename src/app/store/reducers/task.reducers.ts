@@ -1,96 +1,84 @@
-import { createReducer, on } from '@ngrx/store';
-import { taskAdapter, initialTaskState } from '../state/task.state';
+import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
+import { createReducer, on, Action } from '@ngrx/store';
+import { ToDo } from '../../models/models';
 import * as TaskActions from '../actions/task.actions';
-import * as AuthActions from '../actions/auth.actions';
-import { ToDo } from 'src/app/models/models';
 
-export interface TaskState { 
-  tasks: ToDo[];
+export interface TaskState extends EntityState<ToDo> {
+  loading: boolean;
+  error: string | null;
 }
-export const initialTaskState: TaskState = {
-  tasks: []
-};
 
-export const taskReducer = createReducer(
+export const taskAdapter: EntityAdapter<ToDo> = createEntityAdapter<ToDo>();
+
+export const initialTaskState: TaskState = taskAdapter.getInitialState({
+  loading: false,
+  error: null,
+});
+
+const _taskReducer = createReducer(
   initialTaskState,
 
-  // Load Current User Tasks
-  on(TaskActions.loadCurrentUserTasks, (state) => ({
+  // Load Tasks - Fix the action creators
+  on(TaskActions.loadTasks, (state, { userId }) => ({ // Make sure action has proper payload
     ...state,
     loading: true,
-    error: null
-  })),
-  on(TaskActions.loadCurrentUserTasksSuccess, (state, { tasks }) =>
-    taskAdapter.setAll(tasks, { ...state, loading: false })
-  ),
-  on(TaskActions.loadCurrentUserTasksFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error
+    error: null,
   })),
 
-  // Create Task
-  on(TaskActions.createTaskForCurrentUser, (state) => ({
-    ...state,
-    loading: true,
-    error: null
-  })),
-  on(TaskActions.createTaskSuccess, (state, { task }) =>
-    taskAdapter.addOne(task, { ...state, loading: false })
+  on(TaskActions.loadTasksSuccess, (state, { todos }) => 
+    taskAdapter.setAll(todos, {
+      ...state,
+      loading: false,
+    })
   ),
-  on(TaskActions.createTaskFailure, (state, { error }) => ({
+
+  on(TaskActions.loadTasksFailure, (state, { error }) => ({
     ...state,
     loading: false,
-    error
+    error,
   })),
+
+  // Add Task
+  on(TaskActions.addTask, (state, { task }) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(TaskActions.addTaskSuccess, (state, { task }) =>
+    taskAdapter.addOne(task, {
+      ...state,
+      loading: false,
+    })
+  ),
 
   // Update Task Status
-  on(TaskActions.updateCurrentUserTaskStatus, (state) => ({
-    ...state,
-    loading: true,
-    error: null
-  })),
-  on(TaskActions.updateTaskStatusSuccess, (state, { task }) =>
+  on(TaskActions.updateTaskStatus, (state, { taskId, completed }) =>
     taskAdapter.updateOne(
-      { id: task.id!, changes: task },
-      { ...state, loading: false }
+      {
+        id: taskId,
+        changes: { completed },
+      },
+      {
+        ...state,
+        loading: false,
+      }
     )
   ),
-  on(TaskActions.updateTaskStatusFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error
-  })),
 
-  // Delete Task
-  on(TaskActions.deleteCurrentUserTask, (state) => ({
+  // Delete Task - Fix the action payload
+  on(TaskActions.deleteTask, (state, { taskId }) => ({
     ...state,
     loading: true,
-    error: null
-  })),
-  on(TaskActions.deleteTaskSuccess, (state, { id }) =>
-    taskAdapter.removeOne(id, { ...state, loading: false })
-  ),
-  on(TaskActions.deleteTaskFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error
   })),
 
-  // Filters
-  on(TaskActions.setTaskFilters, (state, { filters }) => ({
-    ...state,
-    filters: { ...state.filters, ...filters }
-  })),
-
-  // Clear tasks when user logs out
-  on(AuthActions.logoutSuccess, (state) =>
-    taskAdapter.removeAll({ ...state })
-  ),
-
-  // Clear Error
-  on(TaskActions.clearTaskError, (state) => ({
-    ...state,
-    error: null
-  }))
+  on(TaskActions.deleteTaskSuccess, (state, { taskId }) =>
+    taskAdapter.removeOne(taskId, {
+      ...state,
+      loading: false,
+    })
+  )
 );
+
+export function taskReducer(state: TaskState | undefined, action: Action) {
+  return _taskReducer(state, action);
+}

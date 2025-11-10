@@ -1,1 +1,20 @@
-<p>task-list works!</p>
+<!-- Make sure you're using the async pipe with todos$ -->
+<div *ngIf="todos$ | async as todos">
+  <div *ngFor="let todo of todos" class="task-item">
+    <h3>{{ todo.title }}</h3>
+    <p>{{ todo.description }}</p>
+    <button (click)="deleteCurrentUserTask(todo.id)">Delete</button>
+  </div>
+</div>
+
+<!-- If calling create method from template, pass individual parameters -->
+<button (click)="createTaskForCurrentUser('New Task', 'Task description')">
+  Add Task
+</button>
+
+<!-- Or if using a form -->
+<form (submit)="createTaskForCurrentUser(title.value, description.value)">
+  <input #title placeholder="Title">
+  <input #description placeholder="Description">
+  <button type="submit">Add</button>
+</form>
