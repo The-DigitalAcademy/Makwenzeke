@@ -13,6 +13,7 @@ import { authReducer } from './store/reducers/auth.reducers';
 import { taskReducer } from './store/reducers/task.reducers';
 import { TaskEffects } from './store/effects/task.effects';
 
+
 @NgModule({
   declarations: [
     AppComponent,
