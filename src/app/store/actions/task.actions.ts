@@ -128,3 +128,15 @@ export const deleteTaskSuccess = createAction(
   '[Task] Delete Task Success',
   props<{ taskId: string }>()
 );
+
+export function loadCurrentUserTasks(): any {
+  throw new Error('Function not implemented.');
+}
+export function updateCurrentUserTaskStatus(arg0: { id: string; status: string; }): any {
+  throw new Error('Function not implemented.');
+}
+
+export function deleteCurrentUserTask(arg0: { id: string; }): any {
+  throw new Error('Function not implemented.');
+}
+

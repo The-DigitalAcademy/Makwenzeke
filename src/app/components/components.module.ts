@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskManagerComponent } from './task-manager/task-manager.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TaskListComponent } from './task-list/task-list.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     TaskManagerComponent,
     TaskFormComponent,
+    TaskListComponent,
   ],
   imports: [
     CommonModule,

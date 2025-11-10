@@ -3,6 +3,7 @@ import { ToDo } from 'src/app/models/models';
 
 // Use your existing ToDo interface for the Task state
 export interface TaskState extends EntityState<ToDo> {
+  todos: any;
   selectedTaskId: string | null;
   loading: boolean;
   error: string | null;

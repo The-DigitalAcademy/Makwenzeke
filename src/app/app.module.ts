@@ -13,7 +13,6 @@ import { authReducer } from './store/reducers/auth.reducers';
 import { taskReducer } from './store/reducers/task.reducers';
 import { TaskEffects } from './store/effects/task.effects';
 import { TaskListComponent } from './components/task-list/task-list.component';
-
 import { NavbarComponent } from './navbar/navbar.component';
 
 
@@ -21,7 +20,6 @@ import { NavbarComponent } from './navbar/navbar.component';
   declarations: [
     AppComponent,
     NavbarComponent,
-    TaskListComponent,
   ],
   imports: [
     BrowserModule,
