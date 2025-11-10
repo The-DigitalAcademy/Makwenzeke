@@ -10,7 +10,7 @@ const routes: Routes = [
   // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthenticationComponent] },
   { path: 'dashboard', component: DashboardComponent },
   {path: 'auth', component: AuthenticationComponent},
-  // { path: '**', redirectTo: '/auth' },
+  { path: '**', redirectTo: '/auth' },
   { path: 'task-form', component: TaskFormComponent }
 ];
 
