@@ -1,14 +1,14 @@
-<nav class="navbar" *ngIf="isAuthenticated$">
+<nav class="navbar">
   <div class="navbar-content">
     <div class="logo-section">
         <img src="../../../assets/Images/LOGO.jpeg" alt="Company Logo" class="logo-img">
     </div>
-    <div class="navbar-links">
+    <div class="navbar-links" *ngIf="isAuthenticated$ | async">
       <a routerLink="/dashboard" routerLinkActive="active-link" class="nav-link">Dashboard</a>
       <a routerLink="/tasks" routerLinkActive="active-link" class="nav-link">Tasks</a>
     </div>
-    <div class="navbar-user" *ngIf="currentUser$ ">
-      <button class="btn" (click)="logout()">Logout</button>
+    <div class="navbar-user" *ngIf="isAuthenticated$ | async">
+      <button class="btn-logout" (click)="logout()">Logout</button>
     </div>
   </div>
 </nav>

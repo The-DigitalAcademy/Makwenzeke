@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import * as AuthActions from '../store/actions/auth.actions';
 import { selectCurrentUser, selectIsAuthenticated } from '../store/selectors/auth.selectors';
 import { AppUser } from '../models/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,15 +12,16 @@ import { AppUser } from '../models/models';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  isAuthenticated$: Observable<boolean>;
-  currentUser$: Observable<AppUser | null>;
+  isAuthenticated$!: Observable<boolean>;
+  currentUser$!: Observable<AppUser | null>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
     this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
     this.currentUser$ = this.store.select(selectCurrentUser);
   }
 
   logout(): void {
-    this.store.dispatch(AuthActions.logout());
+    this.store.dispatch(AuthActions.logoutSuccess());
+    this.router.navigate(['/auth']);
   }
 }
