@@ -148,6 +148,9 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
 .btn-primary {

@@ -1,14 +1,14 @@
 <nav class="navbar" *ngIf="isAuthenticated$">
   <div class="navbar-content">
-    <div class="navbar-brand">
-      <h1>📝 ToDo App</h1>
+    <div class="logo-section">
+        <img src="../../../assets/Images/LOGO.jpeg" alt="Company Logo" class="logo-img">
     </div>
     <div class="navbar-links">
       <a routerLink="/dashboard" routerLinkActive="active-link" class="nav-link">Dashboard</a>
       <a routerLink="/tasks" routerLinkActive="active-link" class="nav-link">Tasks</a>
     </div>
     <div class="navbar-user" *ngIf="currentUser$ ">
-      <button class="btn-logout" (click)="logout()">Logout</button>
+      <button class="btn" (click)="logout()">Logout</button>
     </div>
   </div>
 </nav>
