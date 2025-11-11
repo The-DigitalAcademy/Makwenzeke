@@ -53,6 +53,24 @@
       "name": "nana",
       "email": "bvc123@gmail.con",
       "password": "bvc123"
+    },
+    {
+      "id": "a16d453e-6172-40ac-a1eb-dab402e2dcb0",
+      "name": "neoyho@mail.com",
+      "email": "neoyho@mail.com",
+      "password": "neoyho@mail.com"
+    },
+    {
+      "id": "1f130630-39e9-49ec-8eb7-6bb2de697cf2",
+      "name": "che@gmail.com",
+      "email": "che@gmail.com",
+      "password": "che@gmail.com"
+    },
+    {
+      "id": "7448270b-dece-4ec9-9837-cf5163e13aad",
+      "name": "cho@gmail.com",
+      "email": "cho@gmail.com",
+      "password": "cho@gmail.com"
     }
   ],
   "tasks": [
@@ -177,6 +195,19 @@
       "date": "2025-11-10",
       "createdAt": "2025-11-10T10:08:46.004Z",
       "updatedAt": "2025-11-10T10:08:46.004Z"
+    },
+    {
+      "id": "833c",
+      "title": "fdvfdv",
+      "description": "dsfvfdsvfds",
+      "status": "in-progress",
+      "priority": "medium",
+      "dueDate": "2025-11-29",
+      "userID": "a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f",
+      "date": "2025-11-11",
+      "completed": false,
+      "createdAt": "2025-11-11T13:13:20.154Z",
+      "updatedAt": "2025-11-11T13:13:20.154Z"
     }
   ]
 }

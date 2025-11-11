@@ -1,9 +1,9 @@
 <!-- Make sure you're using the async pipe with todos$ -->
-<div *ngIf="todos$ | async as todos">
-  <div *ngFor="let todo of todos" class="task-item">
-    <h3>{{ todo.title }}</h3>
-    <p>{{ todo.description }}</p>
-    <button (click)="deleteCurrentUserTask(todo.id)">Delete</button>
+<div *ngIf="tasks$ | async as tasks">
+  <div *ngFor="let task of tasks" class="task-item">
+    <h3>{{ task.title }}</h3>
+    <p>{{ task.description }}</p>
+    <button (click)="deleteCurrentUserTask(task.id)">Delete</button>
   </div>
 </div>
 

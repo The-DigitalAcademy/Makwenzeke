@@ -3,7 +3,7 @@ import { ToDo } from 'src/app/models/models';
 
 // Use your existing ToDo interface for the Task state
 export interface TaskState extends EntityState<ToDo> {
-  todos: ToDo[];
+  tasks: ToDo[];
   selectedTaskId: string | null;
   loading: boolean;
   error: string | null;
@@ -22,7 +22,7 @@ export const taskAdapter: EntityAdapter<ToDo> = createEntityAdapter<ToDo>({
 
 // Initial state
 export const initialTaskState: TaskState = taskAdapter.getInitialState({
-  todos: [],
+  tasks: [],
   selectedTaskId: null,
   loading: false,
   error: null,

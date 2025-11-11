@@ -26,8 +26,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppRoutingModule,
     HttpClientModule,
     ComponentsModule,
-    StoreModule.forRoot({todos:
-      taskReducer
+    StoreModule.forRoot({
+      auth: authReducer,
+      tasks: taskReducer
     }),
     StoreDevtoolsModule.instrument({maxAge: 25})
   ],

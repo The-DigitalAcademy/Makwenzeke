@@ -3,13 +3,13 @@ import { TaskState, taskAdapter } from '../state/task.state';
 import { selectCurrentUserId } from './auth.selectors';
 
 // Get the task feature state
-export const selectTaskState = createFeatureSelector<TaskState>('todos');
+export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 
 // Get the selectors from the entity adapter
 const { selectAll } = taskAdapter.getSelectors();
 
 // Select all tasks (for current user only in practice)
-export const selectAllTasks = createSelector(selectTaskState, (state: TaskState) => state.todos);
+export const selectAllTasks = createSelector(selectTaskState, (state: TaskState) => state.tasks);
 
 // Select ONLY current user's tasks
 export const selectCurrentUserTasks = createSelector(
@@ -17,7 +17,7 @@ export const selectCurrentUserTasks = createSelector(
   selectCurrentUserId,
   (tasks, currentUserId) => {
     if (!currentUserId) return [];
-    return tasks.filter((todo: { userID: string; }) => todo.userID === currentUserId);
+    return tasks.filter((task: { userID: string; }) => task.userID === currentUserId);
   }
 );
 // Select task filters
@@ -31,9 +31,9 @@ export const selectFilteredCurrentUserTasks = createSelector(
   selectCurrentUserTasks,
   selectTaskFilters,
   (userTasks, filters) => {
-    return userTasks.filter((todo: { status: string; priority: string; }) => {
-      const statusMatch = !filters.status || todo.status === filters.status;
-      const priorityMatch = !filters.priority || todo.priority === filters.priority;
+    return userTasks.filter((task: { status: string; priority: string; }) => {
+      const statusMatch = !filters.status || task.status === filters.status;
+      const priorityMatch = !filters.priority || task.priority === filters.priority;
       return statusMatch && priorityMatch;
     });
   }
@@ -51,38 +51,3 @@ export const selectTasksError = createSelector(
   selectTaskState,
   (state) => state.error
 );
-// import { createSelector, createFeatureSelector } from '@ngrx/store';
-// import { TaskState, taskAdapter } from '../reducers/task.reducers';
-// import { ToDo } from 'src/app/models/models';
-
-// export const selectTaskState = createFeatureSelector<TaskState>('tasks');
-
-// // Get all the entity selectors from the adapter
-// export const {
-//   selectAll: selectAllTodos,
-//   selectEntities: selectTodoEntities,
-//   selectIds: selectTodoIds,
-//   selectTotal: selectTotalTodos,
-// } = taskAdapter.getSelectors(selectTaskState);
-
-// // Custom selectors
-// export const selectLoading = createSelector(
-//   selectTaskState,
-//   (state: TaskState) => state.loading
-// );
-
-// export const selectError = createSelector(
-//   selectTaskState,
-//   (state: TaskState) => state.error
-// );
-
-// // Example filtered selectors with proper typing
-// export const selectCompletedTodos = createSelector(
-//   selectAllTodos,
-//   (todos: ToDo[]) => todos.filter((todo: ToDo) => todo.completed)
-// );
-
-// export const selectPendingTodos = createSelector(
-//   selectAllTodos,
-//   (todos: ToDo[]) => todos.filter((todo: ToDo) => !todo.completed)
-// );
