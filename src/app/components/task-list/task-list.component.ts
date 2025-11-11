@@ -55,7 +55,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToDo } from '../../models/models';
 import * as TaskActions from '../../store/actions/task.actions';
-import { selectAllTodos, selectLoading, selectError } from '../../store/selectors/task.selectors';
+import { selectAllTasks, selectTasksLoading, selectTasksError } from '../../store/selectors/task.selectors';
 
 @Component({
   selector: 'app-task-list',
@@ -68,9 +68,9 @@ export class TaskListComponent {
   error$: Observable<string | null>;
 
   constructor(private store: Store<TaskState>) {
-    this.todos$ = this.store.select(selectAllTodos);
-    this.loading$ = this.store.select(selectLoading);
-    this.error$ = this.store.select(selectError);
+    this.todos$ = this.store.select(selectAllTasks);
+    this.loading$ = this.store.select(selectTasksLoading);
+    this.error$ = this.store.select(selectTasksError);
   }
 
   // Fix the ToDo interface to include all required properties
@@ -87,7 +87,7 @@ export class TaskListComponent {
       dueDate: '',
       updatedAt: ''
     };
-    this.store.dispatch(TaskActions.addTask({ task: newTask }));
+    this.store.dispatch(TaskActions.addTask({ taskData: newTask }));
   }
 
   setTaskFilters(filters: any): void {
@@ -96,6 +96,6 @@ export class TaskListComponent {
   }
 
   deleteCurrentUserTask(taskId: string): void {
-    this.store.dispatch(TaskActions.deleteTask({ taskId }));
+    this.store.dispatch(TaskActions.deleteTask({ id: taskId }));
   }
 }

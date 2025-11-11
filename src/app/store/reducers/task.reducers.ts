@@ -25,8 +25,8 @@ const _taskReducer = createReducer(
     error: null,
   })),
 
-  on(TaskActions.loadTasksSuccess, (state, { todos }) => 
-    taskAdapter.setAll(todos, {
+  on(TaskActions.loadTasksSuccess, (state, { tasks }) => 
+    taskAdapter.setAll(tasks, {
       ...state,
       loading: false,
     })
@@ -39,7 +39,7 @@ const _taskReducer = createReducer(
   })),
 
   // Add Task
-  on(TaskActions.addTask, (state, { task }) => ({
+  on(TaskActions.addTask, (state, { taskData }) => ({
     ...state,
     loading: true,
   })),
@@ -52,11 +52,11 @@ const _taskReducer = createReducer(
   ),
 
   // Update Task Status
-  on(TaskActions.updateTaskStatus, (state, { taskId, completed }) =>
+  on(TaskActions.updateTaskStatus, (state, { id, status }) =>
     taskAdapter.updateOne(
       {
-        id: taskId,
-        changes: { completed },
+        id,
+        changes: { status:'COMPLETED' },
       },
       {
         ...state,
@@ -66,7 +66,7 @@ const _taskReducer = createReducer(
   ),
 
   // Delete Task - Fix the action payload
-  on(TaskActions.deleteTask, (state, { taskId }) => ({
+  on(TaskActions.deleteTask, (state, { id }) => ({
     ...state,
     loading: true,
   })),

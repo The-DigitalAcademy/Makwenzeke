@@ -93,7 +93,7 @@ export const loadTasks = createAction(
 
 export const loadTasksSuccess = createAction(
   '[Task] Load Tasks Success',
-  props<{ todos: ToDo[] }>()
+  props<{ tasks: ToDo[] }>()
 );
 
 export const loadTasksFailure = createAction(
@@ -104,7 +104,7 @@ export const loadTasksFailure = createAction(
 // Add Task
 export const addTask = createAction(
   '[Task] Add Task',
-  props<{ task: Omit<ToDo, 'id'> }>()
+  props<{ taskData: Omit<ToDo, 'id'> }>()
 );
 
 export const addTaskSuccess = createAction(
@@ -112,21 +112,46 @@ export const addTaskSuccess = createAction(
   props<{ task: ToDo }>()
 );
 
+export const addTaskFailure = createAction(
+  '[Task] Add Task Failure',
+ props<{ error: string}>()
+)
 // Update Task Status
 export const updateTaskStatus = createAction(
   '[Task] Update Task Status',
-  props<{ taskId: string; completed: boolean }>()
+  props<{ id: string; status: string}>()
+);
+
+export const updateTaskStatusSuccess = createAction(
+  '[Task] Update Task Status Success',
+  props<{ task: ToDo }>()
+);
+
+export const updateTaskStatusFailure = createAction(
+  '[Task] Update Task Status Failure',
+  props<{ error: string }>()
 );
 
 // Delete Task
 export const deleteTask = createAction(
   '[Task] Delete Task',
-  props<{ taskId: string }>()
+  props<{ id: string }>()
 );
 
 export const deleteTaskSuccess = createAction(
   '[Task] Delete Task Success',
   props<{ taskId: string }>()
+);
+
+export const deleteTaskFailure = createAction(
+  '[Task] Delete Task Failure',
+  props<{ error: string }>()
+);
+
+// Filter CURRENT USER'S Tasks
+export const setTaskFilters = createAction(
+  '[Task] Set Filters',
+  props<{ filters: { status?: string; priority?: string } }>()
 );
 
 export function loadCurrentUserTasks(): any {
