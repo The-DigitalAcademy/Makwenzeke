@@ -1,8 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthService } from 'src/app/services/auth.service';
 import  * as authActions  from '../../store/actions/auth.actions';
 
 @Component({
