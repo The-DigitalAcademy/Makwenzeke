@@ -19,12 +19,13 @@ export class TaskEffects {
       ofType(TaskActions.loadTasks),
       withLatestFrom(this.store.select(AuthSelectors.selectCurrentUser)),
       mergeMap(([action, currentUser]) => {
+        console.log(currentUser)
         if (!currentUser) {
           return of(TaskActions.loadTasksFailure({ 
             error: 'No user logged in' 
           }));
         }
-        
+        console.log(currentUser)
         return this.taskService.getTasksByUserId(currentUser.id).pipe(
           map((tasks) => TaskActions.loadTasksSuccess({ tasks })),
           catchError((error) => of(TaskActions.loadTasksFailure({ error: error.message })))

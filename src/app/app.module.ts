@@ -39,7 +39,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     EffectsModule.forRoot([TaskEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-    })
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]

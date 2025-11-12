@@ -1,9 +1,10 @@
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 import { createReducer, on, Action } from '@ngrx/store';
-import { ToDo } from '../../models/models';
+import { ToDo, ToDoData } from '../../models/models';
 import * as TaskActions from '../actions/task.actions';
 
 export interface TaskState extends EntityState<ToDo> {
+  tasks: Array<ToDoData>;
   loading: boolean;
   error: string | null;
 }
@@ -11,6 +12,7 @@ export interface TaskState extends EntityState<ToDo> {
 export const taskAdapter: EntityAdapter<ToDo> = createEntityAdapter<ToDo>();
 
 export const initialTaskState: TaskState = taskAdapter.getInitialState({
+  tasks: [],
   loading: false,
   error: null,
 });
@@ -28,6 +30,7 @@ const _taskReducer = createReducer(
   on(TaskActions.loadTasksSuccess, (state, { tasks }) => 
     taskAdapter.setAll(tasks, {
       ...state,
+      tasks: tasks,
       loading: false,
     })
   ),

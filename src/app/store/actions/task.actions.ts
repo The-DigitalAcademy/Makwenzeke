@@ -11,6 +11,7 @@ export const loadTasks = createAction(
 
 export const loadUserTasks = createAction(
   '[Task] Load Current User Tasks',
+  props<{ tasks: ToDo[] }>()
 )
 
 export const loadTasksSuccess = createAction(
@@ -105,6 +106,18 @@ export function deleteCurrentUserTask(arg0: { id: string; }): any {
 
 export function editCurrentUserTask(arg0: { id: string;}): any {
   throw new Error("Function not implemented");
+}
+
+export function updateCurrentUserTaskStatus(arg0: { id: string; status: "OVERDUE" | "COMPLETED" | "PENDING"; }): any {
+  throw new Error('Function not implemented.');
+}
+
+export function setTaskFilters(arg0: { filters: { status: string; priority: string; }; }): any {
+  throw new Error('Function not implemented.');
+}
+
+export function loadCurrentUserTasks(): any {
+  throw new Error('Function not implemented.');
 }
 // Filter CURRENT USER'S Tasks
 // export const setTaskFilters = createAction(
