@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (user) {
         this.userName = user.name;
         // Always load tasks when component initializes
-        this.store.dispatch(TaskActions.loadCurrentUserTasks());  
+        this.store.dispatch(TaskActions.loadUserTasks());  
       }
     });
 
@@ -111,17 +111,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   toggleTaskCompletion(task: ToDo): void {
     const updatedTask = { ...task, completed: !task.completed };
-    this.store.dispatch(TaskActions.updateCurrentUserTaskStatus({ 
+    this.store.dispatch(TaskActions.updateTaskStatus({ 
       id: task.id!, 
       status: updatedTask.completed ? 'COMPLETED' : 'PENDING' 
     }));
   }
 
+   onEditTask(task: ToDo): void {
+    this.store.dispatch(TaskActions.openEditTaskModal({ task }));
+  }
+
+
   deleteTask(taskId: string | undefined): void {
     if (taskId && confirm('Are you sure you want to delete this task?')) {
-      this.store.dispatch(TaskActions.deleteCurrentUserTask({ id: taskId }));
+      this.store.dispatch(TaskActions.deleteTask({ id: taskId }));
     }
   }
+
 
   navigateToTasks(): void {
     this.router.navigate(['/tasks']);

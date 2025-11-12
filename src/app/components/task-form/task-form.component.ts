@@ -90,7 +90,7 @@ export class TaskFormComponent implements OnInit {
     };
 
     // Dispatch action to create task through NgRx
-    this.store.dispatch(TaskActions.createTaskForCurrentUser({ 
+    this.store.dispatch(TaskActions.addTask({ 
       taskData: {
         title: taskData.title,
         description: taskData.description,
@@ -98,7 +98,10 @@ export class TaskFormComponent implements OnInit {
         priority: taskData.priority,
         dueDate: taskData.dueDate,
         date: taskData.date,
-        completed: taskData.completed
+        completed: taskData.completed,
+        createdAt: taskData.date,
+        updatedAt: taskData.date,
+        userID: taskData.userID
       }
     }));
 
@@ -111,7 +114,7 @@ export class TaskFormComponent implements OnInit {
       
       // Navigate to dashboard
       this.router.navigate(['/dashboard']);
-    }, 500);
+    }, 500)
   }
   navigateToDashboard(): void{
     this.router.navigate(['/dashboard'])
