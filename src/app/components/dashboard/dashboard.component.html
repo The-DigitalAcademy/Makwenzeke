@@ -94,14 +94,6 @@
             <div *ngIf="!(loading$ | async) && displayedTasks.length > 0" class="task-list">
                 <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed">
                     <div class="task-content">
-                        <div class="task-checkbox">
-                            <input 
-                                type="checkbox" 
-                                [checked]="task.completed" 
-                                (change)="toggleTaskCompletion(task)"
-                                [id]="'task-' + task.id">
-                            <label [for]="'task-' + task.id"></label>
-                        </div>
                         <div class="task-details">
                             <h4 class="task-title">{{ task.title }}</h4>
                             <p class="task-description">{{ task.description }}</p>
@@ -113,11 +105,27 @@
                                 <span class="task-status">{{ task.status }}</span>
                             </div>
                         </div>
-                    </div>
+                    
                     <div class="task-actions">
+                        <div class="task-checkbox">
+                            <input 
+                                type="checkbox" 
+                                [checked]="task.completed" 
+                                (change)="toggleTaskCompletion(task)"
+                                [id]="'task-' + task.id"
+                                class="checkbox-input">
+                            <label [for]="'task-' + task.id"></label>
+                        </div>
+                            <button 
+                                class="btn-edit"
+                                (click)="onEditTask(task)">
+                                Edit
+                          </button>
                         <button class="btn-icon btn-delete" (click)="deleteTask(task.id)" title="Delete task">
                             🗑️
                         </button>
+
+                        </div>
                     </div>
                 </div>
             </div>

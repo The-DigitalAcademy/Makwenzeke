@@ -51,6 +51,47 @@ const _taskReducer = createReducer(
     })
   ),
 
+    // Edit Task
+  on(TaskActions.editTask, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+
+  on(TaskActions.editTaskSuccess, (state, { task }) =>
+    taskAdapter.updateOne(
+      {
+        id: task.id,
+        changes: task
+      },
+      {
+        ...state,
+        loading: false,
+        editingTask: null,
+        isEditModalOpen: false
+      }
+    )
+  ),
+
+  on(TaskActions.editTaskFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
+  })),
+
+  // Edit Modal
+  on(TaskActions.openEditTaskModal, (state, { task }) => ({
+    ...state,
+    editingTask: task,
+    isEditModalOpen: true
+  })),
+
+  on(TaskActions.closeEditTaskModal, (state) => ({
+    ...state,
+    editingTask: null,
+    isEditModalOpen: false
+  })),
+
   // Update Task Status
   on(TaskActions.updateTaskStatus, (state, { id, status }) =>
     taskAdapter.updateOne(

@@ -32,12 +32,12 @@ export class TaskService {
   }
 
   // PUT /tasks/:id - Update entire task
-  updateTask(id: string, task: ToDo): Observable<ToDo> {
+  updateTask(taskId: string, updates: Partial<ToDo>): Observable<ToDo> {
     const updatedTask = {
-      ...task,
+      ...updates,
       updatedAt: new Date().toISOString()
     };
-    return this.http.put<ToDo>(`${this.apiUrl}/${id}`, updatedTask);
+    return this.http.put<ToDo>(`${this.apiUrl}/${taskId}`, updates);
   }
 
   // PATCH /tasks/:id - Partial update

@@ -8,12 +8,14 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 
+
 @NgModule({
   declarations: [
     AuthenticationComponent,
     DashboardComponent,
     TaskFormComponent,
     TaskListComponent,
+  
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,7 @@ import * as AuthSelectors from '../selectors/auth.selectors';
 import { ToDoData } from 'src/app/models/models';
 import { SCANNED_ACTIONS_SUBJECT_PROVIDERS } from '@ngrx/store/src/scanned_actions_subject';
 import { AppState } from '../state/task.state';
+import { ToDo } from 'src/app/models/models';
 
 @Injectable()
 export class TaskEffects {
@@ -55,6 +56,18 @@ export class TaskEffects {
           catchError((error) => of(TaskActions.addTaskFailure({ error: error.message })))
         );
       })
+    )
+  );
+  // Edit Current User's tasks
+    editTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TaskActions.editTask),
+      mergeMap(({ taskId, updates }) =>
+        this.taskService.updateTask(taskId, updates).pipe(
+          map((updatedTask: ToDo) => TaskActions.editTaskSuccess({ task: updatedTask })),
+          catchError((error) => of(TaskActions.editTaskFailure({ error: error.message })))
+        )
+      )
     )
   );
 

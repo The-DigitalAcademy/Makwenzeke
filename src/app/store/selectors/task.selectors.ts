@@ -6,10 +6,10 @@ import { selectCurrentUserId } from './auth.selectors';
 export const selectTaskState = createFeatureSelector<TaskState>('tasks');
 
 // Get the selectors from the entity adapter
-const { selectAll } = taskAdapter.getSelectors();
+const { selectAll, selectEntities, selectIds, selectTotal } = taskAdapter.getSelectors();
 
 // Select all tasks (for current user only in practice)
-export const selectAllTasks = createSelector(selectTaskState, (state: TaskState) => state.tasks);
+export const selectAllTasks = createSelector(selectTaskState, selectAll);
 
 // Select ONLY current user's tasks
 export const selectCurrentUserTasks = createSelector(
@@ -17,13 +17,32 @@ export const selectCurrentUserTasks = createSelector(
   selectCurrentUserId,
   (tasks, currentUserId) => {
     if (!currentUserId) return [];
-    return tasks.filter((task: { userID: string; }) => task.userID === currentUserId);
+    if (!tasks) return [];
+    return tasks.filter((task: any) => task.userID === currentUserId);
   }
+);
+
+// Select the task being edited
+export const selectEditingTask = createSelector(
+  selectTaskState,
+  (state) => state.editingTask
+);
+
+// Select edit modal state
+export const selectIsEditModalOpen = createSelector(
+  selectTaskState,
+  (state) => state.isEditModalOpen
+);
+
+// Select task by ID (useful for editing)
+export const selectTaskById = (taskId: string) => createSelector(
+  selectAllTasks,
+  (tasks) => tasks.find(task => task.id === taskId)
 );
 // Select task filters
 export const selectTaskFilters = createSelector(
   selectTaskState,
-  (state) => state.filters
+  (state) => state.filters || {} 
 );
 
 // Select filtered tasks for CURRENT USER only
@@ -31,7 +50,9 @@ export const selectFilteredCurrentUserTasks = createSelector(
   selectCurrentUserTasks,
   selectTaskFilters,
   (userTasks, filters) => {
-    return userTasks.filter((task: { status: string; priority: string; }) => {
+    if (!userTasks) return [];
+    if (!filters) return userTasks;
+    return userTasks.filter((task: any) => {
       const statusMatch = !filters.status || task.status === filters.status;
       const priorityMatch = !filters.priority || task.priority === filters.priority;
       return statusMatch && priorityMatch;

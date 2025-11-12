@@ -9,6 +9,10 @@ export const loadTasks = createAction(
   props<{ userId: string }>()
 );
 
+export const loadUserTasks = createAction(
+  '[Task] Load Current User Tasks',
+)
+
 export const loadTasksSuccess = createAction(
   '[Task] Load Tasks Success',
   props<{ tasks: ToDo[] }>()
@@ -33,7 +37,35 @@ export const addTaskSuccess = createAction(
 export const addTaskFailure = createAction(
   '[Task] Add Task Failure',
  props<{ error: string}>()
-)
+);
+
+// Add these to your existing actions:
+
+// Edit Task Actions
+export const editTask = createAction(
+  '[Task] Edit Task',
+  props<{ taskId: string; updates: Partial<ToDo> }>()
+);
+
+export const editTaskSuccess = createAction(
+  '[Task] Edit Task Success', 
+  props<{ task: ToDo }>()
+);
+
+export const editTaskFailure = createAction(
+  '[Task] Edit Task Failure',
+  props<{ error: string }>()
+);
+
+// For opening/closing edit modal
+export const openEditTaskModal = createAction(
+  '[Task] Open Edit Task Modal',
+  props<{ task: ToDo }>()
+);
+
+export const closeEditTaskModal = createAction(
+  '[Task] Close Edit Task Modal'
+);
 // Update Task Status
 export const updateTaskStatus = createAction(
   '[Task] Update Task Status',
@@ -67,19 +99,19 @@ export const deleteTaskFailure = createAction(
 );
 
 // Filter CURRENT USER'S Tasks
-export const setTaskFilters = createAction(
-  '[Task] Set Filters',
-  props<{ filters: { status?: string; priority?: string } }>()
-);
+// export const setTaskFilters = createAction(
+//   '[Task] Set Filters',
+//   props<{ filters: { status?: string; priority?: string } }>()
+// );
 
-export function loadCurrentUserTasks(): any {
-  throw new Error('Function not implemented.');
-}
-export function updateCurrentUserTaskStatus(arg0: { id: string; status: string; }): any {
-  throw new Error('Function not implemented.');
-}
+// export function loadCurrentUserTasks(): any {
+//   throw new Error('Function not implemented.');
+// }
+// export function updateCurrentUserTaskStatus(arg0: { id: string; status: string; }): any {
+//   throw new Error('Function not implemented.');
+// }
 
-export function deleteCurrentUserTask(arg0: { id: string; }): any {
-  throw new Error('Function not implemented.');
-}
+// export function deleteCurrentUserTask(arg0: { id: string; }): any {
+//   throw new Error('Function not implemented.');
+// }
 
