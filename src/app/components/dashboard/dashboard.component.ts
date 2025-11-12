@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { ToDo } from 'src/app/models/models';
+import { ToDo, ToDoData } from 'src/app/models/models';
 import * as TaskActions from '../../store/actions/task.actions';
 import { selectAllTasks, selectFilteredCurrentUserTasks, selectTasksLoading } from '../../store/selectors/task.selectors';
 import { selectCurrentUser } from '../../store/selectors/auth.selectors';
@@ -44,8 +44,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ).subscribe(user => {
       if (user) {
         this.userName = user.name;
-        // Always load tasks when component initializes
-        this.store.dispatch(TaskActions.loadUserTasks());  
       }
     });
 
@@ -53,6 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.tasks$.pipe(
       takeUntil(this.destroy$)
     ).subscribe(tasks => {
+      this.store.dispatch(TaskActions.loadUserTasks({tasks}));  
       this.totalTasks = tasks.length;
       this.completedTasks = tasks.filter(t => t.completed).length;
       this.pendingTasks = tasks.filter(t => !t.completed).length;

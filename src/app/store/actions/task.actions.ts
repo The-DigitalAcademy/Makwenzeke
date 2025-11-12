@@ -11,6 +11,7 @@ export const loadTasks = createAction(
 
 export const loadUserTasks = createAction(
   '[Task] Load Current User Tasks',
+  props<{ tasks: ToDo[] }>()
 )
 
 export const loadTasksSuccess = createAction(
