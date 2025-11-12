@@ -59,6 +59,12 @@
       "name": "ZeeLwa",
       "email": "Lwazi.Gumede@gmail.com",
       "password": "ZeeYeye1"
+    },
+    {
+      "id": "8f2dc627-cc07-46f5-9439-8546ced034f0",
+      "name": "Kgomotso",
+      "email": "Manana.KG@gmail.com",
+      "password": "KGman123"
     }
   ],
   "tasks": [
@@ -261,6 +267,19 @@
       "userID": "af01a2e8-ef28-4152-9f37-68c10ced0f4c",
       "createdAt": "2025-11-12T09:31:10.158Z",
       "updatedAt": "2025-11-12T09:31:10.158Z"
+    },
+    {
+      "id": "0118",
+      "title": "This is KG",
+      "description": "Hello, this is my first task.",
+      "status": "PENDING",
+      "priority": "high",
+      "dueDate": "2025-11-27",
+      "date": "2025-11-12",
+      "completed": false,
+      "userID": "8f2dc627-cc07-46f5-9439-8546ced034f0",
+      "createdAt": "2025-11-12T11:30:44.759Z",
+      "updatedAt": "2025-11-12T11:30:44.759Z"
     }
   ]
 }

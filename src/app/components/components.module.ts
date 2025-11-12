@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskManagerComponent } from './task-manager/task-manager.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TodoCard } from '../shared/todo';
+
 
 
 @NgModule({
@@ -14,7 +14,7 @@ import { TodoCard } from '../shared/todo';
     DashboardComponent,
     TaskManagerComponent,
     TaskFormComponent,
-    TodoCard
+    
   ],
   imports: [
     CommonModule,

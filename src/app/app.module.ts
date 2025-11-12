@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +34,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     EffectsModule.forRoot([TaskEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-    })
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [],
   bootstrap: [AppComponent]
