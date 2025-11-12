@@ -11,12 +11,12 @@
             <div class="nav-item"
                  [class.active]="activeFilter === 'important'"
                  (click)="setFilter('important')">
-                <span>⭐</span> Important
+                <span>❗️</span> Important
             </div>
             <div class="nav-item"
                  [class.active]="activeFilter === 'upcoming'"
                  (click)="setFilter('upcoming')">
-                <span>🗓️</span> Upcoming
+                <span>⏳</span> Pending
             </div>
             <div class="nav-item"
                  [class.active]="activeFilter === 'completed'"
@@ -35,7 +35,7 @@
             </div>
             <div class="top-actions">
                 <button class="btn btn-primary" (click)="navigateToTasks()" >
-                    <span>+</span> Manage Tasks
+                    <span></span> Manage Tasks
                 </button>
             </div>
         </div>
@@ -74,7 +74,7 @@
 
             <!-- Task List Section -->
             <div class="section-header">
-                <h3>My Tasks</h3>
+                <h3></h3>
             </div>
             <div>
                 <app-task-list></app-task-list>
@@ -92,14 +92,14 @@
 
             <!-- Task List -->
             <div *ngIf="!(loading$ | async) && displayedTasks.length > 0" class="task-list">
-                <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed">
+                <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed" style="display: none;">
                     <div class="task-content">
                         <div class="task-details">
                             <h4 class="task-title">{{ task.title }}</h4>
                             <p class="task-description">{{ task.description }}</p>
                             <div class="task-meta">
                                 <span class="task-priority" [class]="getPriorityClass(task)">
-                                    {{ getPriorityLabel(task) }} Priority
+                                    {{ task.priority }} Priority
                                 </span>
                                 <span class="task-date">Due: {{ formatDate(task.dueDate) }}</span>
                                 <span class="task-status">{{ task.status }}</span>
@@ -128,6 +128,8 @@
                         </div>
                     </div>
                 </div>
+                <todo-card [todos]="displayedTasks"></todo-card>
+
             </div>
         </div>
     </div>

@@ -116,6 +116,9 @@ export class TaskFormComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }, 500)
   }
+  navigateToDashboard(): void{
+    this.router.navigate(['/dashboard'])
+  }
 
   resetForm(): void {
     this.taskForm.reset({

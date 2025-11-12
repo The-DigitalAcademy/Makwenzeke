@@ -4,6 +4,7 @@ import { AuthenticationComponent } from './authentication/authentication.compone
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TodoCard } from '../shared/todo';
 import { TaskListComponent } from './task-list/task-list.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 
@@ -14,6 +15,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
     AuthenticationComponent,
     DashboardComponent,
     TaskFormComponent,
+    TodoCard
     TaskListComponent,
   
   ],
