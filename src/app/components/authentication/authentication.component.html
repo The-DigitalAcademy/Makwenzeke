@@ -11,7 +11,7 @@
         <div class="form-container">
             <form [formGroup]="signupForm" class="form"[ngClass]="{'active': !isSigninForm() }" id="signupForm" (ngSubmit)="signup()">
                 <div class="input-group">
-                    <input type="text" formControlName="displayName" placeholder="Name" required>
+                    <input type="text" formControlName="name" placeholder="Name" required>
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-group">
