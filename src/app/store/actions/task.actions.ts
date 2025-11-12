@@ -98,6 +98,14 @@ export const deleteTaskFailure = createAction(
   props<{ error: string }>()
 );
 
+
+export function deleteCurrentUserTask(arg0: { id: string; }): any {
+  throw new Error("Function not implemented.");
+}
+
+export function editCurrentUserTask(arg0: { id: string;}): any {
+  throw new Error("Function not implemented");
+}
 // Filter CURRENT USER'S Tasks
 // export const setTaskFilters = createAction(
 //   '[Task] Set Filters',
