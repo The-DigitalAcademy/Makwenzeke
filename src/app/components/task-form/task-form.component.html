@@ -1,7 +1,8 @@
 <div class="task-form-container">
   <!-- Add Task Button -->
   <div class="add-task-button" *ngIf="!showForm">
-    <button class="btn btn-primary btn-lg" (click)="toggleForm()">
+    <!-- <button class="btn btn-primary btn-lg" (click)="toggleForm()"> -->
+      <button class="btn btn-primary btn-lg"> 
       <i class="icon-plus"></i> Add New Task
     </button>
   </div>
@@ -104,23 +105,6 @@
           </div>
         </div>
 
-        <!-- Assigned User -->
-        <div class="form-group">
-          <label for="userId" class="form-label">Assign To *</label>
-          <select
-            id="userId"
-            formControlName="userId"
-            class="form-control"
-            [class.invalid]="isFieldInvalid('userId')">
-            <option value="">Select User</option>
-            <option *ngFor="let user of userOptions" [value]="user.id">
-              {{ user.name }}
-            </option>
-          </select>
-          <div class="error-message" *ngIf="isFieldInvalid('userId')">
-            {{ getFieldError('userId') }}
-          </div>
-        </div>
       </div>
 
       <!-- Form Actions -->

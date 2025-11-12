@@ -1,8 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AuthService } from 'src/app/services/auth.service';
 import  * as authActions  from '../../store/actions/auth.actions';
 
 @Component({
@@ -15,7 +13,7 @@ export class AuthenticationComponent {
   signinForm!: FormGroup;
   signupForm!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder, private store: Store){
+  constructor(private fb: FormBuilder, private store: Store){
     this.initialiseForms();
   }
 
@@ -27,7 +25,7 @@ export class AuthenticationComponent {
     });
 
     this.signupForm = this.fb.group({
-      displayName: ['', [Validators.minLength(4), Validators.maxLength(15)]],
+      name: ['', [Validators.minLength(4), Validators.maxLength(15)]],
       email: ['', [Validators.email]],
       password: ['', [Validators.minLength(4), Validators.maxLength(15)]]
     });
@@ -38,34 +36,14 @@ export class AuthenticationComponent {
     if(!this.signinForm.valid) return; 
     // Form is valid, destructure and pass emaill and password into our login method.
     const { email, password } = this.signinForm.value;
-    this.authService.login(email, password).subscribe({
-      next: (resp) => {
-        this.store.dispatch(
-          authActions.loginSuccess({ user : resp })
-        );
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.store.dispatch(authActions.loginFailure({ error: err }));
-        alert('Error signin into your account.');
-      }
-    })
+    this.store.dispatch(authActions.login({email, password}));
   }
 
   signup() {
     if(!this.signupForm.valid) return;
     // Form is valid, destructure form and pass displayName, emaill and password into our register/signup method.
-    const { displayName, email, password } = this.signupForm.value;
-    this.authService.register(displayName, email, password).subscribe({
-      next: (resp) => {
-        this.store.dispatch( authActions.loginSuccess({ user : resp }) );
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        // Error signinup, display alert or toaster to user
-        alert('Error creating account.');
-      }
-    })
+    const { name, email, password } = this.signupForm.value;
+    this.store.dispatch(authActions.signup({name, email, password}));
   }
 
   isSigninForm() : boolean {
