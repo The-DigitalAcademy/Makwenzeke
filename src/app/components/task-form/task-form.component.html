@@ -11,7 +11,7 @@
   <div class="task-form-card" *ngIf="showForm">
     <div class="form-header">
       <h3>Create New Task</h3>
-      <button class="btn-close" (click)="onCancel()" type="button">&times;</button>
+      <button class="btn-close" (click)="navigateToDashboard()" type="button">&times;</button>
     </div>
 
     <!-- Form starts here -->
@@ -112,7 +112,7 @@
         <button
           type="button"
           class="btn btn-secondary"
-          (click)="onCancel()"
+          (click)="navigateToDashboard()"
           [disabled]="isSubmitting">
           Cancel
         </button>
