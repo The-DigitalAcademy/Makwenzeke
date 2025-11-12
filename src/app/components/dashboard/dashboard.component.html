@@ -11,12 +11,12 @@
             <div class="nav-item"
                  [class.active]="activeFilter === 'important'"
                  (click)="setFilter('important')">
-                <span>⭐</span> Important
+                <span>❗️</span> Important
             </div>
             <div class="nav-item"
                  [class.active]="activeFilter === 'upcoming'"
                  (click)="setFilter('upcoming')">
-                <span>🗓️</span> Upcoming
+                <span>⏳</span> Pending
             </div>
             <div class="nav-item"
                  [class.active]="activeFilter === 'completed'"
@@ -35,7 +35,7 @@
             </div>
             <div class="top-actions">
                 <button class="btn btn-primary" (click)="navigateToTasks()" >
-                    <span>+</span> Manage Tasks
+                    <span></span> Manage Tasks
                 </button>
             </div>
         </div>
@@ -74,7 +74,7 @@
 
             <!-- Task List Section -->
             <div class="section-header">
-                <h3>My Tasks</h3>
+                <h3></h3>
             </div>
 
             <!-- Loading State -->

@@ -53,6 +53,12 @@
       "name": "nana",
       "email": "bvc123@gmail.con",
       "password": "bvc123"
+    },
+    {
+      "id": "8d45e60c-c8f7-4447-8064-e174c0dd5846",
+      "name": "anina",
+      "email": "moola1@gmail.com",
+      "password": "moola34"
     }
   ],
   "tasks": [
