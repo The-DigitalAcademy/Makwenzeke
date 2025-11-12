@@ -767,6 +767,19 @@
       "createdAt": "2025-11-12T12:59:32.909Z",
       "updatedAt": "2025-11-12T12:59:32.909Z",
       "userID": "e375b9f7-ab7f-4246-9faf-41f6c8963da7"
+    },
+    {
+      "id": "6deb",
+      "title": "wahxuhdc",
+      "description": "eifuhihefih",
+      "status": "PENDING",
+      "priority": "medium",
+      "dueDate": "2025-11-12",
+      "date": "2025-11-12",
+      "completed": false,
+      "createdAt": "2025-11-12T13:09:52.850Z",
+      "updatedAt": "2025-11-12T13:09:52.850Z",
+      "userID": "e375b9f7-ab7f-4246-9faf-41f6c8963da7"
     }
   ]
 }
