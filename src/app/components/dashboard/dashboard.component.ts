@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.displayedTasks = tasks;
         break;
       case 'important':
-        this.displayedTasks = tasks.filter(t => !t.completed);
+        this.displayedTasks = tasks.filter(t => t.priority === 'high');
         break;
       case 'today':
         this.displayedTasks = this.getTasksToday(tasks);
@@ -106,14 +106,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getUpcomingTasks(tasks: ToDo[]): ToDo[] {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    return tasks.filter(task => {
-      const taskDate = new Date(task.createdAt);
-      taskDate.setHours(0, 0, 0, 0);
-      return taskDate.getTime() > today.getTime() && !task.completed;
-    });
+    return tasks.filter(task => task.status === 'PENDING');
   }
 
   toggleTaskCompletion(task: ToDo): void {

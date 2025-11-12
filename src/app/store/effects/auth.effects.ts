@@ -66,6 +66,21 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  signup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.signup),
+      mergeMap(({ name, email, password }) =>
+        this.authService.register(name, email, password).pipe(
+          map(user => AuthActions.loginSuccess({ user })),
+          catchError(error => {
+            const errorMessage = error.message || 'Signup failed';
+            return of(AuthActions.signupFailure({ error: errorMessage }));
+          })
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private authService: AuthService,

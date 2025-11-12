@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { ToDo, ToDoData } from 'src/app/models/models';
+import { AppUser, ToDo, ToDoData } from 'src/app/models/models';
 import * as TaskActions from '../../store/actions/task.actions';
 import { selectCurrentUser } from '../../store/selectors/auth.selectors';
 import { take } from 'rxjs';
@@ -18,7 +18,8 @@ export class TaskFormComponent implements OnInit {
 
   taskForm!: FormGroup;
   isSubmitting = false;
-  showForm = false;
+  showForm = true;
+  currentUser!: AppUser;
 
   statusOptions = [
     { value: 'PENDING', label: 'Pending' },
@@ -31,12 +32,6 @@ export class TaskFormComponent implements OnInit {
     { value: 'high', label: 'High' },
   ];
 
-  userOptions = [
-    { id: 'a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f', name: 'Musa_Gumede' },
-    { id: 'b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a', name: 'Nomthi' },
-    { id: 'c1e5a3b7-2d4f-4a9c-8e0b-3f5d7c9a1e2b', name: 'BongaG' }
-  ];
-
   constructor(
     private fb: FormBuilder,
     private store: Store,
@@ -44,14 +39,13 @@ export class TaskFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.taskForm = this.createForm();
-    
     // Auto-select current user in the userId field
     this.store.select(selectCurrentUser).pipe(take(1)).subscribe(user => {
       if (user) {
-        this.taskForm.patchValue({ userId: user.id });
+        this.currentUser = user;
       }
     });
+     this.taskForm = this.createForm();
   }
 
   createForm(): FormGroup {
@@ -61,10 +55,12 @@ export class TaskFormComponent implements OnInit {
       status: ['PENDING', Validators.required],
       priority: ['medium', Validators.required],
       dueDate: ['', Validators.required],
-      userId: ['', Validators.required]
+      userId: [this.currentUser.id, Validators.required]
     });
   }
 
+
+  // not used.
   toggleForm(): void {
     this.showForm = !this.showForm;
     if (!this.showForm) {

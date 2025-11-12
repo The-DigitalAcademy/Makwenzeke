@@ -104,7 +104,7 @@
                             <p class="task-description">{{ task.description }}</p>
                             <div class="task-meta">
                                 <span class="task-priority" [class]="getPriorityClass(task)">
-                                    {{ getPriorityLabel(task) }} Priority
+                                    {{ task.priority }} Priority
                                 </span>
                                 <span class="task-date">Due: {{ formatDate(task.dueDate) }}</span>
                                 <span class="task-status">{{ task.status }}</span>
