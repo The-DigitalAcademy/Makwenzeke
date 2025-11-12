@@ -12,6 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { authReducer } from './store/reducers/auth.reducers';
 import { taskReducer } from './store/reducers/task.reducers';
 import { TaskEffects } from './store/effects/task.effects';
+import { AuthEffects } from './store/effects/auth.effects';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -26,11 +27,15 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppRoutingModule,
     HttpClientModule,
     ComponentsModule,
+    
     StoreModule.forRoot({
       auth: authReducer,
       tasks: taskReducer
     }),
-    StoreDevtoolsModule.instrument({maxAge: 25})
+    EffectsModule.forRoot([TaskEffects, AuthEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
