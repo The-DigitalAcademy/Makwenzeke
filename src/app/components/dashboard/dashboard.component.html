@@ -88,7 +88,7 @@
 
             <!-- Task List -->
             <div *ngIf="!(loading$ | async) && displayedTasks.length > 0" class="task-list">
-                <div *ngFor="let task of displayedTasks" class="task-item">
+                <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed">
                     <div class="task-content">
                         <div class="task-details">
                             <h4 class="task-title">{{ task.title }}</h4>
