@@ -33,5 +33,15 @@ export const setCurrentUser = createAction(
   props<{ user: AppUser }>()
 );
 
+export const signup = createAction(
+  '[Auth] create user',
+  props<{ name: string, email: string, password: string}>()
+);
+
+export const signupFailure = createAction(
+  '[Auth] Signup Failure',
+  props<{ error: string }>()
+);
+
 // Clear Error
 export const clearAuthError = createAction('[Auth] Clear Error');
