@@ -11,7 +11,7 @@ import { selectAllTasks, selectTasksLoading, selectTasksError } from '../../stor
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.scss']
+  styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent {
   tasks$: Observable<ToDo[]>;

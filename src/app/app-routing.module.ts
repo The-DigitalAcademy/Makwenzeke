@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthenticationComponent},
   { path: 'tasks', component: TaskFormComponent},
   { path: 'task-list', component: TaskListComponent},
+  { path: '**', redirectTo: '/auth'}
 ];
 
 @NgModule({
