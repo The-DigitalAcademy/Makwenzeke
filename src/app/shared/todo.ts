@@ -5,7 +5,7 @@ import * as TaskActions from '../store/actions/task.actions';
 
 @Component({
   selector: "todo-card",
-  styleUrls: ['./todo.css'],
+  styleUrls: ["./todo.css"],
   template: `
     <div *ngFor="let task of todos" class="todo-card">
       <div class="todo-main">
@@ -15,12 +15,36 @@ import * as TaskActions from '../store/actions/task.actions';
 
         <div class="todo-content">
           <div class="todo-header">
-            <h3 class="todo-title">{{task.title}}</h3>
-            <span class="priority-badge priority-high">{{task.priority}}</span>
-            <span class="status-badge status-pending">Pending</span>
+            <h3 class="todo-title">{{ task.title }}</h3>
+            <span
+              class="priority-badge"
+              [ngClass]="{
+                'priority-low': task.priority === 'low',
+                'priority-medium': task.priority === 'medium',
+                'priority-high': task.priority === 'high'
+              }"
+            >
+              {{ task.priority }}
+            </span>
+            <span
+              class="status-badge"
+              [ngClass]="{
+                'status-pending': task.status === 'PENDING',
+                'status-completed': task.status === 'COMPLETED',
+                'status-overdue': task.status === 'OVERDUE'
+              }"
+            >
+              {{
+                task.status === "PENDING"
+                  ? "Pending"
+                  : task.status === "COMPLETED"
+                  ? "Completed"
+                  : "Overdue"
+              }}
+            </span>
           </div>
           <p class="todo-description">
-            {{task.description}}
+            {{ task.description }}
           </p>
           <div class="todo-meta">
             <span class="meta-item">
@@ -37,7 +61,7 @@ import * as TaskActions from '../store/actions/task.actions';
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              Due:{{task.dueDate}}
+              Due:{{ task.dueDate }}
             </span>
             <span class="meta-item">
               <svg
@@ -51,14 +75,18 @@ import * as TaskActions from '../store/actions/task.actions';
                 <circle cx="12" cy="12" r="10"></circle>
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
-              Created: {{task.createdAt}}
+              Created: {{ task.createdAt }}
             </span>
           </div>
         </div>
       </div>
 
       <div class="todo-actions">
-        <button (click)="markToDoCompleted(task.id)" class="btn btn-done" title="Mark as done">
+        <button
+          (click)="markToDoCompleted(task.id)"
+          class="btn btn-done"
+          title="Mark as done"
+        >
           <svg
             width="16"
             height="16"
@@ -89,7 +117,11 @@ import * as TaskActions from '../store/actions/task.actions';
           </svg>
           Edit
         </button>
-        <button (click)="deleteToDo(task.id)" class="btn btn-delete" title="Delete">
+        <button
+          (click)="deleteToDo(task.id)"
+          class="btn btn-delete"
+          title="Delete"
+        >
           <svg
             width="16"
             height="16"
@@ -107,22 +139,18 @@ import * as TaskActions from '../store/actions/task.actions';
         </button>
       </div>
     </div>
-    `
+  `,
 })
 export class TodoCard {
-    @Input() todos : ToDo[] = [];
+  @Input() todos: ToDo[] = [];
 
-    constructor(private store: Store){}
+  constructor(private store: Store) {}
 
-    deleteToDo(taskId: string) {
-      this.store.dispatch(TaskActions.deleteCurrentUserTask({ id: taskId }));
-    }
+  deleteToDo(taskId: string) {
+    this.store.dispatch(TaskActions.deleteCurrentUserTask({ id: taskId }));
+  }
 
-    markToDoCompleted(taskId: string) {
+  markToDoCompleted(taskId: string) {}
 
-    }
-
-    updateToDo(taskId: string) {
-
-    }
+  updateToDo(taskId: string) {}
 }
