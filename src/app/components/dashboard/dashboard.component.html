@@ -1,1 +1,135 @@
-<p>dashboard works!</p>
+<div class="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <nav class="nav-menu">
+            <div class="nav-item" 
+                 [class.active]="activeFilter === 'all'"
+                 (click)="setFilter('all')">
+                <span>📋</span> All Tasks
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'important'"
+                 (click)="setFilter('important')">
+                <span>❗️</span> Important
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'upcoming'"
+                 (click)="setFilter('upcoming')">
+                <span>⏳</span> Pending
+            </div>
+            <div class="nav-item"
+                 [class.active]="activeFilter === 'completed'"
+                 (click)="setFilter('completed')">
+                <span>✅</span> Completed
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="welcome">
+                <h2>Welcome back, {{ userName }}!</h2>
+                <p>You have {{ tasksToday }} task{{ tasksToday !== 1 ? 's' : '' }} to complete today</p>
+            </div>
+
+        </div>
+
+        <div class="content-area">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">{{ totalTasks }}</div>
+                            <div class="stat-label">Total Tasks</div>
+                        </div>
+                        <div class="stat-icon">📝</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">{{ completedTasks }}</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value">{{ pendingTasks }}</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                        <div class="stat-icon">⏳</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task List Section -->
+            <div class="section-header">
+                <h3></h3>
+            </div>
+            <div>
+                <app-task-list></app-task-list>
+            </div>
+
+            <!-- Loading State -->
+            <div *ngIf="loading$ | async" class="loading-state">
+                <p>Loading tasks...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="!(loading$ | async) && displayedTasks.length === 0" class="empty-state">
+                <p>No tasks found. Create your first task!</p>
+            </div>
+
+            <!-- Task List -->
+            <div *ngIf="!(loading$ | async) && displayedTasks.length > 0" class="task-list">
+                <div *ngFor="let task of displayedTasks" class="task-item">
+                    <div class="task-content">
+                        <div class="task-details">
+                            <h4 class="task-title">{{ task.title }}</h4>
+                            <p class="task-description">{{ task.description }}</p>
+                            <div class="task-meta">
+                                <span class="task-priority" [class]="getPriorityClass(task)">
+                                    {{ task.priority }} Priority
+                                </span>
+                                <span class="task-date">Due: {{ formatDate(task.dueDate) }}</span>
+                                <span class="task-status">{{ task.status }}</span>
+                            </div>
+                        </div>
+                    
+                    <div class="task-actions">
+                        <div class="task-checkbox">
+                            <input 
+                                type="checkbox" 
+                                [checked]="task.completed" 
+                                (change)="toggleTaskCompletion(task)"
+                                [id]="'task-' + task.id"
+                                class="checkbox-input">
+                            <label [for]="'task-' + task.id"></label>
+                        </div>
+                            <button 
+                                class="btn-edit"
+                                (click)="onEditTask(task)">
+                                Edit
+                          </button>
+                        <button class="btn-icon btn-delete" (click)="deleteTask(task.id)" title="Delete task">
+                            🗑️
+                        </button>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <todo-card [todos]="displayedTasks"></todo-card> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" (click)="navigateToTasks()">+</button>

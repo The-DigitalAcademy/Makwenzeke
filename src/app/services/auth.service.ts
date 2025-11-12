@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, filter, catchError } from 'rxjs/operators';
-import { AppUser } from '../models/user.models';
+import { AppUser } from '../models/models';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { v4 as uuidv4, v4 } from 'uuid';
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   // Register a new user
-  register(displayName: string, email: string, password: string): Observable<AppUser> {
+  register(name: string, email: string, password: string): Observable<AppUser> {
     // Check if user already exists
     return this.http.get<AppUser[]>(`${this.url}/users?email=${email}`).pipe(
       map(users => {
@@ -84,7 +84,7 @@ export class AuthService {
       map(() => {
         const newUser = {
           id: uuidv4(),
-          displayName,
+          name,
           email,
           password
         };
