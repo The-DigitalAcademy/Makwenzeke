@@ -15,7 +15,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
     AuthenticationComponent,
     DashboardComponent,
     TaskFormComponent,
-    TodoCard
+    TodoCard,
     TaskListComponent,
   
   ],
