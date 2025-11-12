@@ -9,7 +9,6 @@ import * as AuthActions from '../actions/auth.actions';
 @Injectable()
 export class AuthEffects {
 
-  // Login Effect - Connects login action to AuthService
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.login),
@@ -17,7 +16,6 @@ export class AuthEffects {
         this.authService.login(email, password).pipe(
           map(user => AuthActions.loginSuccess({ user })),
           catchError(error => {
-            // Extract error message from the error object
             const errorMessage = error.message || 'Login failed';
             return of(AuthActions.loginFailure({ error: errorMessage }));
           })
@@ -26,7 +24,6 @@ export class AuthEffects {
     )
   );
 
-  // Login Success Effect - Redirect to dashboard
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
@@ -38,38 +35,32 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  // Login Failure Effect - You can handle errors here (show notification, etc.)
   loginFailure$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginFailure),
       tap(({ error }) => {
         console.error('Login failed:', error);
-        // You could show a toast notification here
       })
     ),
     { dispatch: false }
   );
 
-  // Logout Effect - Connects logout action to AuthService
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logout),
       tap(() => {
         this.authService.logout();
-        // Dispatch logout success immediately since logout() is synchronous
-        return AuthActions.logoutSuccess();
       }),
       map(() => AuthActions.logoutSuccess())
     )
   );
 
-  // Logout Success Effect - Redirect to login page
   logoutSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logoutSuccess),
       tap(() => {
         console.log('Logout successful, redirecting to login');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth']);
       })
     ),
     { dispatch: false }
