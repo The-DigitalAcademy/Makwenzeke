@@ -53,6 +53,12 @@
       "name": "nana",
       "email": "bvc123@gmail.con",
       "password": "bvc123"
+    },
+    {
+      "id": "580ec935-1656-45a3-8a2a-4b3fe11021e6",
+      "name": "ZeeLwa",
+      "email": "Lwazi.Gumede@gmail.com",
+      "password": "ZeeYeye1"
     }
   ],
   "tasks": [
@@ -205,17 +211,56 @@
       "updatedAt": "2025-11-11T11:22:36.091Z"
     },
     {
-      "id": "f86d",
-      "title": "Mcwahhh, Period",
-      "description": "Heyyyyyy",
+      "id": "4c4c",
+      "title": "This is my first task",
+      "description": "I want to update task state and give correct values",
       "status": "PENDING",
-      "priority": "medium",
-      "dueDate": "2025-11-20",
+      "priority": "high",
+      "dueDate": "2025-11-27",
       "date": "2025-11-12",
       "completed": false,
-      "userID": "e375b9f7-ab7f-4246-9faf-41f6c8963da7",
-      "createdAt": "2025-11-12T06:04:29.927Z",
-      "updatedAt": "2025-11-12T06:04:29.927Z"
+      "userID": "af01a2e8-ef28-4152-9f37-68c10ced0f4c",
+      "createdAt": "2025-11-12T07:58:10.349Z",
+      "updatedAt": "2025-11-12T07:58:10.349Z"
+    },
+    {
+      "id": "fa65",
+      "title": "The filter works",
+      "description": "This is to check",
+      "status": "PENDING",
+      "priority": "high",
+      "dueDate": "2025-11-28",
+      "date": "2025-11-12",
+      "completed": false,
+      "userID": "af01a2e8-ef28-4152-9f37-68c10ced0f4c",
+      "createdAt": "2025-11-12T09:29:11.592Z",
+      "updatedAt": "2025-11-12T09:29:11.592Z"
+    },
+    {
+      "id": "a932",
+      "title": "My low",
+      "description": "This is to see my low priority filter",
+      "status": "PENDING",
+      "priority": "low",
+      "dueDate": "2025-11-27",
+      "date": "2025-11-12",
+      "completed": false,
+      "userID": "af01a2e8-ef28-4152-9f37-68c10ced0f4c",
+      "createdAt": "2025-11-12T09:29:55.006Z",
+      "updatedAt": "2025-11-12T09:29:55.006Z"
+    },
+    {
+      "id": "692a",
+      "title": "Hello",
+      "description": "Hello world",
+      "status": "COMPLETED",
+      "priority": "medium",
+      "dueDate": "2025-11-21",
+      "date": "2025-11-12",
+      "completed": true,
+      "userID": "af01a2e8-ef28-4152-9f37-68c10ced0f4c",
+      "createdAt": "2025-11-12T09:31:10.158Z",
+      "updatedAt": "2025-11-12T09:31:10.158Z"
     }
   ]
 }
