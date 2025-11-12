@@ -89,7 +89,7 @@
 
             <!-- Task List -->
             <div *ngIf="!(loading$ | async) && displayedTasks.length > 0" class="task-list">
-                <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed">
+                <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed" style="display: none;">
                     <div class="task-content">
                         <div class="task-checkbox">
                             <input 
@@ -117,6 +117,8 @@
                         </button>
                     </div>
                 </div>
+                <todo-card [todos]="displayedTasks"></todo-card>
+
             </div>
         </div>
     </div>
