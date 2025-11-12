@@ -72,6 +72,9 @@
             <div class="section-header">
                 <h3></h3>
             </div>
+            <div>
+                <app-task-list></app-task-list>
+            </div>
 
             <!-- Loading State -->
             <div *ngIf="loading$ | async" class="loading-state">
@@ -85,16 +88,8 @@
 
             <!-- Task List -->
             <div *ngIf="!(loading$ | async) && displayedTasks.length > 0" class="task-list">
-                <div *ngFor="let task of displayedTasks" class="task-item" [class.completed]="task.completed" style="display: none;">
+                <div *ngFor="let task of displayedTasks" class="task-item">
                     <div class="task-content">
-                        <div class="task-checkbox">
-                            <input 
-                                type="checkbox" 
-                                [checked]="task.completed" 
-                                (change)="toggleTaskCompletion(task)"
-                                [id]="'task-' + task.id">
-                            <label [for]="'task-' + task.id"></label>
-                        </div>
                         <div class="task-details">
                             <h4 class="task-title">{{ task.title }}</h4>
                             <p class="task-description">{{ task.description }}</p>
@@ -106,14 +101,30 @@
                                 <span class="task-status">{{ task.status }}</span>
                             </div>
                         </div>
-                    </div>
+                    
                     <div class="task-actions">
+                        <div class="task-checkbox">
+                            <input 
+                                type="checkbox" 
+                                [checked]="task.completed" 
+                                (change)="toggleTaskCompletion(task)"
+                                [id]="'task-' + task.id"
+                                class="checkbox-input">
+                            <label [for]="'task-' + task.id"></label>
+                        </div>
+                            <button 
+                                class="btn-edit"
+                                (click)="onEditTask(task)">
+                                Edit
+                          </button>
                         <button class="btn-icon btn-delete" (click)="deleteTask(task.id)" title="Delete task">
                             🗑️
                         </button>
+
+                        </div>
                     </div>
                 </div>
-                <todo-card [todos]="displayedTasks"></todo-card>
+                <!-- <todo-card [todos]="displayedTasks"></todo-card> -->
 
             </div>
         </div>

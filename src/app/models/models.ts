@@ -6,6 +6,7 @@ export interface AppUser {
 }
 
 export interface ToDo {
+  completed: boolean;
   id: string;
   userID: string;
   title: string;
@@ -14,7 +15,6 @@ export interface ToDo {
   priority: 'low' | 'medium' | 'high';
   date: string;
   dueDate: string;
-  completed: boolean;
   createdAt: string;
   updatedAt: string;
 }
