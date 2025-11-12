@@ -6,7 +6,7 @@ export interface AppUser {
 }
 
 export interface ToDo {
-  id?: string;
+  id: string;
   userID: string;
   title: string;
   description: string;
