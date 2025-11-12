@@ -154,6 +154,17 @@ body {
     gap: 8px;
 }
 
+.btn-edit {
+    padding: 5px 10px 5px 10px;
+    border-radius: 3px;
+    border-color: rgb(246, 167, 246);
+}
+.btn-delete {
+    padding: 5px 10px 5px 10px;
+    border-radius: 3px;
+    border-color: rgb(246, 167, 246);
+}
+
 .btn-primary {
     background: linear-gradient(135deg, #4F46E5, #7C3AED);
     color: white;
