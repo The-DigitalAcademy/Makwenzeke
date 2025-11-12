@@ -38,12 +38,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Load user info
+    // Load user info and dispatch task load
     this.store.select(selectCurrentUser).pipe(
       takeUntil(this.destroy$)
     ).subscribe(user => {
       if (user) {
         this.userName = user.name;
+        // Always load tasks when component initializes
         this.store.dispatch(TaskActions.loadCurrentUserTasks());  
       }
     });
@@ -66,13 +67,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  filterTasks(tasks:ToDo[]): void {
+  filterTasks(tasks: ToDo[]): void {
     switch (this.activeFilter) {
       case 'all':
         this.displayedTasks = tasks;
         break;
       case 'important':
-        // For now, show incomplete tasks as "important"
         this.displayedTasks = tasks.filter(t => !t.completed);
         break;
       case 'today':
@@ -117,25 +117,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   toggleTaskCompletion(task: ToDo): void {
-  const updatedTask = { ...task, completed: !task.completed };
-  this.store.dispatch(TaskActions.updateCurrentUserTaskStatus({ 
-    id: task.id!, 
-    status: updatedTask.completed ? 'COMPLETED' : 'PENDING' 
-  }));
-}
-
-  deleteTask(taskId: number | undefined): void {
-  if (taskId && confirm('Are you sure you want to delete this task?')) {
-    this.store.dispatch(TaskActions.deleteCurrentUserTask({ id: taskId.toString() }));
+    const updatedTask = { ...task, completed: !task.completed };
+    this.store.dispatch(TaskActions.updateCurrentUserTaskStatus({ 
+      id: task.id!, 
+      status: updatedTask.completed ? 'COMPLETED' : 'PENDING' 
+    }));
   }
-}
+
+  deleteTask(taskId: string | undefined): void {
+    if (taskId && confirm('Are you sure you want to delete this task?')) {
+      this.store.dispatch(TaskActions.deleteCurrentUserTask({ id: taskId }));
+    }
+  }
 
   navigateToTasks(): void {
     this.router.navigate(['/tasks']);
   }
 
   getPriorityClass(task: ToDo): string {
-    // Simple priority logic based on completion and recency
     if (task.completed) return 'priority-low';
     
     const daysSinceCreated = Math.floor(
@@ -152,5 +151,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (priorityClass === 'priority-high') return 'High';
     if (priorityClass === 'priority-medium') return 'Medium';
     return 'Low';
+  }
+
+  formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   }
 }

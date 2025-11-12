@@ -6,18 +6,18 @@ export interface AppUser {
 }
 
 export interface ToDo {
-  completed: unknown;
-  id: string;
+  id?: string;
   userID: string;
   title: string;
   description: string;
-  status :'OVERDUE' | 'COMPLETED' | 'PENDING';
+  status: 'OVERDUE' | 'COMPLETED' | 'PENDING';
   priority: 'low' | 'medium' | 'high';
   date: string;
   dueDate: string;
+  completed: boolean;
   createdAt: string;
   updatedAt: string;
 }
-// used when creating a new ToDo task on the UI.
-export type ToDoData = Omit<ToDo, 'id'| 'createdAt'| 'updatedAt'>;
 
+// used when creating a new ToDo task on the UI.
+export type ToDoData = Omit<ToDo, 'id' | 'createdAt' | 'updatedAt'>;

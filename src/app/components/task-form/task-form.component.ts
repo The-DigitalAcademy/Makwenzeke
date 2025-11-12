@@ -1,7 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TaskService } from '../../services/task.service';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { ToDo, ToDoData } from 'src/app/models/models';
+import * as TaskActions from '../../store/actions/task.actions';
+import { selectCurrentUser } from '../../store/selectors/auth.selectors';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-task-form',
@@ -9,23 +13,16 @@ import { ToDo, ToDoData } from 'src/app/models/models';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
-  // Emitters allow parent components to listen for events
-  // - taskCreated emits the new task after successful creation
-  // - formClosed tells the parent that the form was closed
   @Output() taskCreated = new EventEmitter<ToDo>();
   @Output() formClosed = new EventEmitter<void>();
 
-  // Reactive form instance
   taskForm!: FormGroup;
-
-  // UI control flags
   isSubmitting = false;
   showForm = false;
 
-  /** Dropdown options for Status, Priority, and Users **/
   statusOptions = [
-    { value: 'in-progress', label: 'In Progress' },
-    { value: 'completed', label: 'Completed' }
+    { value: 'PENDING', label: 'Pending' },
+    { value: 'COMPLETED', label: 'Completed' }
   ];
 
   priorityOptions = [
@@ -34,7 +31,6 @@ export class TaskFormComponent implements OnInit {
     { value: 'high', label: 'High' },
   ];
 
-  // In a real app, you'd probably fetch these from a backend or database.
   userOptions = [
     { id: 'a3f2c8e1-4b6d-4c9a-8f2e-1d3b5c7a9e0f', name: 'Musa_Gumede' },
     { id: 'b7d4e9f2-3c5a-4d8b-9e1f-2a4c6d8b0e1a', name: 'Nomthi' },
@@ -43,33 +39,32 @@ export class TaskFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private taskService: TaskService
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Initialize form when component loads
     this.taskForm = this.createForm();
+    
+    // Auto-select current user in the userId field
+    this.store.select(selectCurrentUser).pipe(take(1)).subscribe(user => {
+      if (user) {
+        this.taskForm.patchValue({ userId: user.id });
+      }
+    });
   }
 
-  /** 
-   * Creates and returns a new FormGroup.
-   * Validators are used to enforce rules like required fields and length.
-   */
   createForm(): FormGroup {
     return this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(500)]],
-      status: ['todo', Validators.required],
+      status: ['PENDING', Validators.required],
       priority: ['medium', Validators.required],
       dueDate: ['', Validators.required],
       userId: ['', Validators.required]
     });
   }
 
-  /** 
-   * Toggles visibility of the form (e.g., when clicking "Add Task" or "Cancel").
-   * Emits formClosed when hidden to notify parent components.
-   */
   toggleForm(): void {
     this.showForm = !this.showForm;
     if (!this.showForm) {
@@ -77,10 +72,6 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
-  /**
-   * Submits the form data to the backend via the TaskService.
-   * Prevents duplicate submissions and handles success/error feedback.
-   */
   onSubmit(): void {
     if (this.taskForm.invalid || this.isSubmitting) {
       this.markFormGroupTouched();
@@ -91,7 +82,6 @@ export class TaskFormComponent implements OnInit {
 
     const formData = this.taskForm.value;
 
-    // Prepare object that matches backend schema
     const taskData: ToDoData = {
       title: formData.title,
       description: formData.description,
@@ -100,46 +90,58 @@ export class TaskFormComponent implements OnInit {
       dueDate: formData.dueDate,
       userID: formData.userId,
       date: new Date().toISOString().split('T')[0],
-      completed: false
+      completed: formData.status === 'COMPLETED'
     };
 
-    // Send data to service
-    this.taskService.createTask(taskData).subscribe({
-      next: (newTask) => {
-        this.isSubmitting = false;
-        this.taskCreated.emit(newTask); // notify parent
-        this.resetForm();
-        this.showForm = false;
-        alert('✅ Task created successfully!');
-      },
-      error: (error) => {
-        this.isSubmitting = false;
-        console.error('Error creating task:', error);
-        alert('❌ Error creating task. Please try again.');
+    // Dispatch action to create task through NgRx
+    this.store.dispatch(TaskActions.createTaskForCurrentUser({ 
+      taskData: {
+        title: taskData.title,
+        description: taskData.description,
+        status: taskData.status,
+        priority: taskData.priority,
+        dueDate: taskData.dueDate,
+        date: taskData.date,
+        completed: taskData.completed
       }
-    });
+    }));
+
+    // Show success message and navigate
+    setTimeout(() => {
+      this.isSubmitting = false;
+      alert('✅ Task created successfully!');
+      this.resetForm();
+      this.showForm = false;
+      
+      // Navigate to dashboard
+      this.router.navigate(['/dashboard']);
+    }, 500);
   }
 
-  /** Reset all fields to default values **/
   resetForm(): void {
     this.taskForm.reset({
       title: '',
       description: '',
-      status: 'todo',
+      status: 'PENDING',
       priority: 'medium',
       dueDate: '',
       userId: ''
     });
+    
+    // Re-select current user
+    this.store.select(selectCurrentUser).pipe(take(1)).subscribe(user => {
+      if (user) {
+        this.taskForm.patchValue({ userId: user.id });
+      }
+    });
   }
 
-  /** Cancels the form and notifies parent **/
   onCancel(): void {
     this.resetForm();
     this.showForm = false;
     this.formClosed.emit();
   }
 
-  /** Mark all fields as touched so validation messages appear **/
   private markFormGroupTouched(): void {
     Object.keys(this.taskForm.controls).forEach(key => {
       const control = this.taskForm.get(key);
@@ -147,13 +149,11 @@ export class TaskFormComponent implements OnInit {
     });
   }
 
-  /** Validation helper: returns true if a field has errors **/
   isFieldInvalid(fieldName: string): boolean {
     const field = this.taskForm.get(fieldName);
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 
-  /** Returns appropriate validation error messages **/
   getFieldError(fieldName: string): string {
     const field = this.taskForm.get(fieldName);
     if (!field?.errors) return '';
@@ -167,9 +167,7 @@ export class TaskFormComponent implements OnInit {
     return '';
   }
 
-  /** Sets the minimum allowed date for Due Date (today) **/
   getMinDate(): string {
     return new Date().toISOString().split('T')[0];
   }
 }
-
